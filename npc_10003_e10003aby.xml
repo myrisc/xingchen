@@ -1,0 +1,2305 @@
+//国都处NPC
+//20090713
+//
+localvar("$Year",0);//年
+localvar("$Month",0);//月
+localvar("$Day",0);//日
+
+localvar("$SYear",2007);//起始年
+localvar("$SMonth",4);//起始月
+localvar("$SDay",1);//起始日
+
+localvar("$Num",0);
+
+localvar("$MumB",0);
+
+$Year = Year();
+$Month = Month();
+$Day = Day();
+
+
+$Num = $SYear;
+
+for("$Num = 2007","$Num < $Year","$Num = $Num+1")
+{
+	if( $Num == 2008 || $Num == 2012 || $Num == 2016 )
+	{
+		$MumB = $MumB + 2;
+	}
+	else
+	{
+		$MumB = $MumB + 1;
+	}
+}
+
+for("$Num = 1","$Num < $Month","$Num = $Num+1")
+{
+	if( $Num == 1 || $Num == 3 || $Num == 5 || $Num == 7 || $Num == 8 || $Num == 10 || $Num == 12 )
+	{
+		$MumB = $MumB + 3;
+	}
+	if( $Num == 4 || $Num == 6 || $Num == 9 || $Num == 11 )
+	{
+		$MumB = $MumB + 2;
+	}
+	if( $Num == 2 )
+	{
+		if( $Year == 2008 || $Year == 2012 || $Year == 2016 )
+		{
+			$MumB = $MumB + 1;
+		}
+	}
+}
+
+$MumB = $MumB + $Day;
+
+$MumB = $MumB % 14;
+
+localvar("$loc_getbuff",0);
+$loc_getbuff = 0;
+if( GetStateParamByID(6330,"Num") >= 1 || GetStateParamByID(6331,"Num") >= 1 || GetStateParamByID(6332,"Num") >= 1 )
+{
+	$loc_getbuff = 1;
+}
+
+//数值变量，存储玩家上次参与活动的日期
+
+if( ifdef("$m_PartyBuff_Time") == 0 )
+{
+	define("$m_PartyBuff_Time",0);
+}
+
+if( ifdef("$m_PartyTime") == 0 )
+{
+	define("$m_PartyTime",0);
+}
+
+//数值变量，记录玩家今天是否参与过活动
+
+if( ifdef("$m_Party_1") == 0 )
+{
+	define("$m_Party_1",0);
+}
+
+if( ifdef("$m_Party_2") == 0 )
+{
+	define("$m_Party_2",0);
+}
+
+//数值变量，记录玩家今天和历史的活动积分
+
+if( ifdef("$m_PartyScore_today") == 0 )
+{
+	define("$m_PartyScore_today",0);
+}
+
+if( ifdef("$m_PartyScore_history") == 0 )
+{
+	define("$m_PartyScore_history",0);
+}
+
+if( ifdef("$m_PartyScore_temp") == 0)
+{
+	define("$m_PartyScore_temp",0);
+}
+
+//数值变量，记录玩家是否兑换过积分了，0表示兑换过了，1表示未兑换过
+
+if( ifdef("$m_PartyScore_Change") == 0 )
+{
+	define("$m_PartyScore_Change",0);
+}
+
+//定义数值变量，存储时间
+localvar("$loc_TimeN",0);
+localvar("$loc_time",0);
+localvar("$loc_PartyTime",0);
+
+$loc_TimeN = Time();
+$loc_time = Year($loc_TimeN) * 10000 + Month($loc_TimeN) * 100 + Day($loc_TimeN);
+$loc_PartyTime = Hour($loc_TimeN) * 100 + Minute($loc_TimeN);
+
+//定义数值变量，存储兑换猎手牌
+localvar("$loc_lieshoupai_num",0);
+
+//定义字符串变量，用于存储NPC对话内容
+define("#QM_N_TalkText","");
+localvar("#loc_VaribleHK","");
+define("$QM_N_QuestNum",0);
+
+localvar("#a1","");
+GetTextRes(8001,11322,"#a1");
+#QM_N_TalkText = #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11323,"#a1");
+#QM_N_TalkText = #QM_N_TalkText + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11324,"#a1");
+#QM_N_TalkText = #QM_N_TalkText + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11325,"#a1");
+#QM_N_TalkText = #QM_N_TalkText + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11326,"#a1");
+#QM_N_TalkText = #QM_N_TalkText + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11327,"#a1");
+#QM_N_TalkText = #QM_N_TalkText + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11328,"#a1");
+#QM_N_TalkText = #QM_N_TalkText + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11329,"#a1");
+#QM_N_TalkText = #QM_N_TalkText + #a1;
+
+
+//＃＃＃＃＃＃＃＃填写任务关注总数＃＃＃＃＃＃＃＃
+//↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+$QM_N_QuestNum = 1;
+//↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+
+
+//按任务数量创建数值数组变量，用来保存每一个任务的ＩＤ。因为数组是从0开始，所以定义数量时的总值数是任务数量+1，而$QM_N_任务ID[0]用来在每次调用模板时暂时保存要代入模板的任务ＩＤ。
+localvar("$loc_num2",0);
+localvar("$loc_num1",0);
+$loc_num2 = $QM_N_QuestNum + 1;
+
+undefine("$QM_N_QuestId");
+undefine("$QM_N_QuestStep");
+undefine("$QM_N_QuestAim");
+
+define("$QM_N_QuestId[$loc_num2]",0);
+define("$QM_N_QuestStep[$loc_num2]",0);
+define("$QM_N_QuestAim[$loc_num2]",0);
+
+//＃＃＃＃＃＃＃填写该ＮＰＣ关联的每个任务的ＩＤ、步骤及目标＃＃＃＃＃＃＃＃
+//↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+
+//关注1
+
+$QM_N_QuestId[1] = 703401;
+$QM_N_QuestStep[1] = 2;
+$QM_N_QuestAim[1] = 101;
+
+//调用统一对话框
+
+//调用模板判断第每个任务选项所对应的任务是否可接受或进行
+call("scripts/questmodel/quest_model_con_vis.script");
+
+TalkBox(#QM_N_TalkText,"CloseBtn",1,1,0);
+EndTalkBox();
+
+if( $m_TalkRet == 1 )
+{
+	return;
+}
+if( $m_TalkRet >= 10001 )
+{
+	
+	//计算出对话项对应的任务
+	$loc_num1 = $m_TalkRet - 10000;
+	
+	$QM_N_QuestId[0] = $QM_N_QuestId[$loc_num1];
+	$QM_N_QuestStep[0] = $QM_N_QuestStep[$loc_num1];
+	$QM_N_QuestAim[0] = $QM_N_QuestAim[$loc_num1];
+	
+	//进入任务模板
+	call("scripts/questmodel/quest_model_npc.script");
+	return;
+
+}
+if( $m_TalkRet == 999 )
+{
+	localvar("#loc_VaribleHK1","");
+localvar("#a1","");
+GetTextRes(8001,11330,"#a1");
+	#loc_VaribleHK1 = #a1;
+
+	TalkBox(#loc_VaribleHK1,"CloseBtn",1,1,0);
+	EndTalkBox();
+	if( $m_TalkRet == 1 )
+	{
+		return;
+	}
+	return;
+}
+if( $m_TalkRet == 998 )
+{
+//	//创建传送场景ID
+	localvar("$loc_rgn",0);
+//	localvar("@nRegion",0);
+//	localvar("$loc_player",0);
+//	
+//	GetCurRgnGUID("@nRegion");
+//	
+//	GetRgnVar(0,"@nRegion","$loc_Player_Num","$loc_player");
+//	
+//	if( $loc_player < 0 )
+//	{
+//		$loc_player = 0;
+//		AddRgnVar(0,"@nRegion","$loc_Player_Num",$loc_player);
+//	}
+	//创建各分线场景GUID变量
+	localvar("@loc_rgnGUID1",0);
+	localvar("@loc_rgnGUID2",0);
+	localvar("@loc_rgnGUID3",0);
+	localvar("@loc_rgnGUID4",0);
+	localvar("@loc_rgnGUID5",0);
+	localvar("@loc_rgnGUID6",0);
+	//创建各分线场景人数变量
+	localvar("$loc_pNum1",0);
+	localvar("$loc_pNum2",0);
+	localvar("$loc_pNum3",0);
+	localvar("$loc_pNum4",0);
+	localvar("$loc_pNum5",0);
+	localvar("$loc_pNum6",0);
+	//各分线场景GUID格式化赋值
+	FormatGUID("@loc_rgnGUID1","{6D28AFF0-8520-49a3-A9ED-F13EC2039E7A}");
+	FormatGUID("@loc_rgnGUID2","{B313A70A-954F-418b-87FA-AB48E56A0F77}");
+	FormatGUID("@loc_rgnGUID3","{557F2734-E2E5-4f43-8EB8-AF1AA97A55D1}");	
+	FormatGUID("@loc_rgnGUID4","{9FE70D05-2C9B-4a6a-824F-F4A6FC7564ED}");		
+	FormatGUID("@loc_rgnGUID5","{27FF5E19-EBD4-4046-AAFF-D061DA3A7456}");		
+	FormatGUID("@loc_rgnGUID6","{9B6C6B2C-0DCD-4b1d-BC1B-EFA683067199}");
+	//获取各分线场景人数
+	GetRegionPlayerNum("@loc_rgnGUID1","$loc_pNum1");
+	GetRegionPlayerNum("@loc_rgnGUID2","$loc_pNum2");
+	GetRegionPlayerNum("@loc_rgnGUID3","$loc_pNum3");
+	GetRegionPlayerNum("@loc_rgnGUID4","$loc_pNum4");
+	GetRegionPlayerNum("@loc_rgnGUID5","$loc_pNum5");
+	GetRegionPlayerNum("@loc_rgnGUID6","$loc_pNum6");
+//	//获得玩家当前应该被分配的场景
+//	$loc_player = $loc_player % 6;
+//	
+//	if( $loc_player == 0 )
+//	{
+//		$loc_rgn = 40041;
+//	}
+//	if( $loc_player == 1 )
+//	{
+//		$loc_rgn = 41041;
+//	}
+//	if( $loc_player == 2 )
+//	{
+//		$loc_rgn = 42041;
+//	}
+//	if( $loc_player == 3 )
+//	{
+//		$loc_rgn = 43041;
+//	}
+//	if( $loc_player == 4 )
+//	{
+//		$loc_rgn = 44041;
+//	}
+//	if( $loc_player == 5 )
+//	{
+//		$loc_rgn = 45041;
+//	}
+	
+//	PostPlayerInfo("目前的玩家数目=" + $loc_player);
+//	PostPlayerInfo("你将进入场景" + $loc_rgn);
+	
+	//人数判断开始（此处为测试的时候用40041场景，需注释）
+	$loc_rgn = 40041;
+	//一线人数资格判断
+	if( $loc_rgn == 40041 )
+	{
+		if( $loc_pNum1 > 150 )
+		{
+			$loc_rgn = 41041;
+		}
+	}
+	//二线人数资格判断
+	if( $loc_rgn == 41041 )
+	{
+		if( $loc_pNum2 > 150 )
+		{
+			$loc_rgn = 42041;
+		}
+	}
+	//三线人数资格判断
+	if( $loc_rgn == 42041 )
+	{
+		if( $loc_pNum3 > 150 )
+		{
+			$loc_rgn = 43041;
+		}
+	}
+	//四线人数资格判断
+	if( $loc_rgn == 43041 )
+	{
+		if( $loc_pNum4 > 150 )
+		{
+			$loc_rgn = 44041;
+		}
+	}
+	//五线人数资格判断
+	if( $loc_rgn == 44041 )
+	{
+		if( $loc_pNum5 > 150 )
+		{
+			$loc_rgn = 45041;
+		}
+	}
+	//六线人数资格判断
+	if( $loc_rgn == 45041 )
+	{
+		if( $loc_pNum6 > 150 )
+		{
+localvar("#a1","");
+GetTextRes(8001,11331,"#a1");
+			PostPlayerInfo(#a1,RGB(255,0,0));
+
+			return;
+		}
+	}
+	
+	if( GetMe("Level") < 60 )
+	{
+localvar("#a1","");
+GetTextRes(8001,11332,"#a1");
+		PostPlayerInfo(#a1,RGB(255,0,0));
+
+		return;
+	}
+	if( GetGoodsFree() < 1 )
+	{
+localvar("#a1","");
+GetTextRes(8001,11333,"#a1");
+		PostPlayerInfo(#a1,RGB(255,0,0));
+
+		return;
+	}
+	//判断是否需要更新玩家参与活动的标志，1表示今天已经参与过，0表示今天尚未参与
+	if( $m_PartyTime != $loc_time )
+	{
+		$m_Party_1 = 0;
+		$m_Party_2 = 0;
+		$m_PartyScore_today = 0;	//积分清零
+//		$m_PartyScore_temp = 0;		//该临时记录积分的变量，将会在积分兑换处重置，如果玩家不兑换积分将无法再次进入场景
+		$m_PartyTime = $loc_time;
+	}
+	//当天参与活动，且不在活动中（即表示参与的活动时间已经结束）
+	if( $m_Party_1 == 1 )
+	{
+		if( DayOfWeek(Time()) != 2 && DayOfWeek(Time()) != 4 && DayOfWeek(Time()) != 6 )
+		{
+			if( $loc_PartyTime > 1400 )
+			{
+localvar("#a1","");
+GetTextRes(8001,11334,"#a1");
+				PostPlayerInfo(#a1,RGB(255,0,0));
+
+				return;
+			}
+		}
+		if( DayOfWeek(Time()) == 2 || DayOfWeek(Time()) == 4 || DayOfWeek(Time()) == 6 )
+		{
+			if( $loc_PartyTime > 1600 )
+			{	
+localvar("#a1","");
+GetTextRes(8001,11335,"#a1");
+				PostPlayerInfo(#a1,RGB(255,0,0));
+
+				return;
+			}
+		}
+	}
+	if( $m_Party_2 == 1 )
+	{
+		if( DayOfWeek(Time()) != 2 && DayOfWeek(Time()) != 4 && DayOfWeek(Time()) != 6 && loc_PartyTime > 2000 )
+		{
+localvar("#a1","");
+GetTextRes(8001,11336,"#a1");
+			PostPlayerInfo(#a1,RGB(255,0,0));
+
+			return;
+		}
+		if( DayOfWeek(Time()) == 2 || DayOfWeek(Time()) == 4 || DayOfWeek(Time()) == 6 )
+		{
+			if( $loc_PartyTime > 2200 )
+			{	
+localvar("#a1","");
+GetTextRes(8001,11337,"#a1");
+				PostPlayerInfo(#a1,RGB(255,0,0));
+
+				return;
+			}
+		}
+	}
+	//1:00-2:00
+	if( $loc_PartyTime >= 1300 && $loc_PartyTime <= 1400 )
+	{
+		// 非奇数日，不能参与该时间段的活动
+		if( DayOfWeek(Time()) == 2 || DayOfWeek(Time()) == 4 || DayOfWeek(Time()) == 6 )
+		{
+			localvar("#loc_VaribleHK1","");
+localvar("#a1","");
+GetTextRes(8001,11338,"#a1");
+			#loc_VaribleHK1 = #a1;
+
+			TalkBox(#loc_VaribleHK1,"CloseBtn",1,1,0);
+			EndTalkBox();
+			if( $m_TalkRet == 1 )
+			{
+				return;
+			}
+			return;
+		}
+		//未兑换昨天的积分且不在活动中
+		if( $m_PartyScore_Change == 1 && $m_Party_1 == 0 )
+		{
+			localvar("#loc_VaribleHK1","");
+localvar("#a1","");
+GetTextRes(8001,11339,"#a1");
+			#loc_VaribleHK1 = #a1;
+
+			TalkBox(#loc_VaribleHK1,"CloseBtn",1,1,0);
+			EndTalkBox();
+			if( $m_TalkRet == 1 )
+			{
+				return;
+			}
+			return;
+		}
+		localvar("#loc_VaribleHK1","");
+localvar("#a1","");
+GetTextRes(8001,11340,"#a1");
+		#loc_VaribleHK1 = #a1;
+
+		TalkBox(#loc_VaribleHK1,"ContinueBtn",1,"CloseBtn",1,1,0);
+		EndTalkBox();
+		if( $m_TalkRet == 0 )
+		{
+localvar("#a1","");
+GetTextRes(8001,11341,"#a1");
+			#loc_VaribleHK1 = #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11342,"#a1");
+			#loc_VaribleHK1 = #loc_VaribleHK1 + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11343,"#a1");
+			#loc_VaribleHK1 = #loc_VaribleHK1 + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11344,"#a1");
+			#loc_VaribleHK1 = #loc_VaribleHK1 + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11345,"#a1");
+			#loc_VaribleHK1 = #loc_VaribleHK1 + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11346,"#a1");
+			#loc_VaribleHK1 = #loc_VaribleHK1 + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11347,"#a1");
+			#loc_VaribleHK1 = #loc_VaribleHK1 + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11348,"#a1");
+			#loc_VaribleHK1 = #loc_VaribleHK1 + #a1;
+
+			TalkBox(#loc_VaribleHK1,"CloseBtn",1,1,0);
+			EndTalkBox();
+			if( $m_TalkRet == 779 )
+			{
+				localvar("#loc_VaribleHK2","");
+localvar("#a1","");
+GetTextRes(8001,11349,"#a1");
+				#loc_VaribleHK2 = #a1;
+
+				if( $loc_getbuff == 1 && $m_PartyBuff_Time != $loc_time )
+				{
+localvar("#a1","");
+GetTextRes(8001,11350,"#a1");
+					#loc_VaribleHK2 = #a1;
+
+				}
+				GameMessage(#loc_VaribleHK2,1);
+				if( $m_TalkRet == 0 )
+				{
+					return;
+				}
+				if( $m_TalkRet == 1 )
+				{
+					if( GetActive() < 200 )
+					{
+localvar("#a1","");
+GetTextRes(8001,11351,"#a1");
+						PostPlayerInfo(#a1,RGB(255,0,0));
+
+						return;
+					}
+					if( $m_PartyBuff_Time == $loc_time )
+					{
+localvar("#a1","");
+GetTextRes(8001,11352,"#a1");
+						PostPlayerInfo(#a1,RGB(255,0,0));
+
+						return;
+					}
+					$m_PartyBuff_Time = $loc_time;
+					DelNewState(6330,1);
+					DelNewState(6331,1);
+					DelNewState(6332,1);
+					TakeActive( 200 );
+					AddNewState(6330,1);
+					
+					$m_PartyScore_Change = 1;
+					$m_Party_1 = 1;
+localvar("#a1","");
+GetTextRes(8001,11353,"#a1");
+					#loc_VaribleHK = #a1;
+
+					#loc_VaribleHK = #loc_VaribleHK + $m_PartyScore_temp;
+					ShowString(840,245,#loc_VaribleHK,1);
+					DelNewState(3012,1);
+					DelNewState(3012,2);
+					DelNewState(3012,3);
+					
+					AddNewState(1267,1);
+					AddSkill(12401,1);
+					AddSkillToShortCutBar(12401,0);
+					
+					$loc_player += 1;
+					SetRgnVar(0,"@nRegion","$loc_Player_Num",$loc_player);
+					ChangeRgn($loc_rgn,336,119);
+					return;
+				}
+				return;
+			}
+			if( $m_TalkRet == 778 )
+			{
+				localvar("#loc_VaribleHK2","");
+localvar("#a1","");
+GetTextRes(8001,11354,"#a1");
+				#loc_VaribleHK2 = #a1;
+
+				if( $loc_getbuff == 1 && $m_PartyBuff_Time != $loc_time )
+				{
+localvar("#a1","");
+GetTextRes(8001,11355,"#a1");
+					#loc_VaribleHK2 = #a1;
+
+				}
+				GameMessage(#loc_VaribleHK2,1);
+				if( $m_TalkRet == 0 )
+				{
+					return;
+				}
+				if( $m_TalkRet == 1 )
+				{
+					if( GetActive() < 600 )
+					{
+localvar("#a1","");
+GetTextRes(8001,11356,"#a1");
+						PostPlayerInfo(#a1,RGB(255,0,0));
+
+						return;
+					}
+					if( $m_PartyBuff_Time == $loc_time )
+					{
+localvar("#a1","");
+GetTextRes(8001,11357,"#a1");
+						PostPlayerInfo(#a1,RGB(255,0,0));
+
+						return;
+					}
+					$m_PartyBuff_Time = $loc_time;
+					DelNewState(6330,1);
+					DelNewState(6331,1);
+					DelNewState(6332,1);
+					TakeActive( 600 );
+					AddNewState(6331,1);
+					
+					$m_PartyScore_Change = 1;
+					$m_Party_1 = 1;
+localvar("#a1","");
+GetTextRes(8001,11358,"#a1");
+					#loc_VaribleHK = #a1;
+
+					#loc_VaribleHK = #loc_VaribleHK + $m_PartyScore_temp;
+					ShowString(840,245,#loc_VaribleHK,1);
+					DelNewState(3012,1);
+					DelNewState(3012,2);
+					DelNewState(3012,3);
+					
+					AddNewState(1267,1);
+					AddSkill(12401,1);
+					AddSkillToShortCutBar(12401,0);
+					
+					$loc_player += 1;
+					SetRgnVar(0,"@nRegion","$loc_Player_Num",$loc_player);
+					ChangeRgn($loc_rgn,336,119);
+					return;
+				}
+				return;
+			}
+			if( $m_TalkRet == 777 )
+			{
+				localvar("#loc_VaribleHK2","");
+localvar("#a1","");
+GetTextRes(8001,11359,"#a1");
+				#loc_VaribleHK2 = #a1;
+
+				if( $loc_getbuff == 1 && $m_PartyBuff_Time != $loc_time )
+				{
+localvar("#a1","");
+GetTextRes(8001,11360,"#a1");
+					#loc_VaribleHK2 = #a1;
+
+				}
+				GameMessage(#loc_VaribleHK2,1);
+				if( $m_TalkRet == 0 )
+				{
+					return;
+				}
+				if( $m_TalkRet == 1 )
+				{
+					if( GetActive() < 1100 )
+					{
+localvar("#a1","");
+GetTextRes(8001,11361,"#a1");
+						PostPlayerInfo(#a1,RGB(255,0,0));
+
+						return;
+					}
+					if( $m_PartyBuff_Time == $loc_time )
+					{
+localvar("#a1","");
+GetTextRes(8001,11362,"#a1");
+						PostPlayerInfo(#a1,RGB(255,0,0));
+
+						return;
+					}
+					$m_PartyBuff_Time = $loc_time;
+					DelNewState(6330,1);
+					DelNewState(6331,1);
+					DelNewState(6332,1);
+					TakeActive( 1100 );
+					AddNewState(6332,1);
+					
+					$m_PartyScore_Change = 1;
+					$m_Party_1 = 1;
+localvar("#a1","");
+GetTextRes(8001,11363,"#a1");
+					#loc_VaribleHK = #a1;
+
+					#loc_VaribleHK = #loc_VaribleHK + $m_PartyScore_temp;
+					ShowString(840,245,#loc_VaribleHK,1);
+					DelNewState(3012,1);
+					DelNewState(3012,2);
+					DelNewState(3012,3);
+					
+					AddNewState(1267,1);
+					AddSkill(12401,1);
+					AddSkillToShortCutBar(12401,0);
+					
+					$loc_player += 1;
+					SetRgnVar(0,"@nRegion","$loc_Player_Num",$loc_player);
+					ChangeRgn($loc_rgn,336,119);
+					return;
+				}
+				return;
+			}
+			if( $m_TalkRet == 776 )
+			{
+				if( GetGoodsFree() < 1 )
+	{
+localvar("#a1","");
+GetTextRes(8001,11333,"#a1");
+		PostPlayerInfo(#a1,RGB(255,0,0));
+
+		return;
+	}
+				$m_PartyScore_Change = 1;
+				$m_Party_1 = 1;
+localvar("#a1","");
+GetTextRes(8001,11364,"#a1");
+				#loc_VaribleHK = #a1;
+
+				#loc_VaribleHK = #loc_VaribleHK + $m_PartyScore_temp;
+				ShowString(840,245,#loc_VaribleHK,1);
+				DelNewState(3012,1);
+				DelNewState(3012,2);
+				DelNewState(3012,3);
+				
+				AddNewState(1267,1);
+				AddSkill(12401,1);
+				AddSkillToShortCutBar(12401,0);
+				
+				$loc_player += 1;
+				SetRgnVar(0,"@nRegion","$loc_Player_Num",$loc_player);
+				ChangeRgn($loc_rgn,336,119);
+				return;
+			}
+			if( $m_TalkRet == 1 )
+			{
+				return;
+			}
+			return;
+		}
+		if( $m_TalkRet == 1 )
+		{
+			return;
+		}
+		return;
+	}
+	//7:00-8:00
+	if( $loc_PartyTime >= 1900 && $loc_PartyTime <= 2000 )
+	{
+		//非奇数日不能在该时间段参与活动
+		if( DayOfWeek(Time()) == 2 || DayOfWeek(Time()) == 4 || DayOfWeek(Time()) == 6 )
+		{
+			localvar("#loc_VaribleHK1","");
+localvar("#a1","");
+GetTextRes(8001,11365,"#a1");
+			#loc_VaribleHK1 = #a1;
+
+			TalkBox(#loc_VaribleHK1,"CloseBtn",1,1,0);
+			EndTalkBox();
+			if( $m_TalkRet == 1 )
+			{
+				return;
+			}
+			return;
+		}
+		//未兑换昨天的积分
+		if( $m_PartyScore_Change == 1 && $m_Party_2 == 0 )
+		{
+			localvar("#loc_VaribleHK1","");
+localvar("#a1","");
+GetTextRes(8001,11366,"#a1");
+			#loc_VaribleHK1 = #a1;
+
+			TalkBox(#loc_VaribleHK1,"CloseBtn",1,1,0);
+			EndTalkBox();
+			if( $m_TalkRet == 1 )
+			{
+				return;
+			}
+			return;
+		}
+		localvar("#loc_VaribleHK1","");
+localvar("#a1","");
+GetTextRes(8001,11367,"#a1");
+		#loc_VaribleHK1 = #a1;
+
+		TalkBox(#loc_VaribleHK1,"ContinueBtn",1,"CloseBtn",1,1,0);
+		EndTalkBox();
+		if( $m_TalkRet == 0 )
+		{
+localvar("#a1","");
+GetTextRes(8001,11368,"#a1");
+			#loc_VaribleHK1 = #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11369,"#a1");
+			#loc_VaribleHK1 = #loc_VaribleHK1 + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11370,"#a1");
+			#loc_VaribleHK1 = #loc_VaribleHK1 + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11371,"#a1");
+			#loc_VaribleHK1 = #loc_VaribleHK1 + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11372,"#a1");
+			#loc_VaribleHK1 = #loc_VaribleHK1 + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11373,"#a1");
+			#loc_VaribleHK1 = #loc_VaribleHK1 + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11374,"#a1");
+			#loc_VaribleHK1 = #loc_VaribleHK1 + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11375,"#a1");
+			#loc_VaribleHK1 = #loc_VaribleHK1 + #a1;
+
+			TalkBox(#loc_VaribleHK1,"CloseBtn",1,1,0);
+			EndTalkBox();
+			if( $m_TalkRet == 779 )
+			{
+				localvar("#loc_VaribleHK2","");
+localvar("#a1","");
+GetTextRes(8001,11376,"#a1");
+				#loc_VaribleHK2 = #a1;
+
+				if( $loc_getbuff == 1 && $m_PartyBuff_Time != $loc_time )
+				{
+localvar("#a1","");
+GetTextRes(8001,11377,"#a1");
+					#loc_VaribleHK2 = #a1;
+
+				}
+				GameMessage(#loc_VaribleHK2,1);
+				if( $m_TalkRet == 0 )
+				{
+					return;
+				}
+				if( $m_TalkRet == 1 )
+				{
+					if( GetActive() < 200 )
+					{
+localvar("#a1","");
+GetTextRes(8001,11378,"#a1");
+						PostPlayerInfo(#a1,RGB(255,0,0));
+
+						return;
+					}
+					if( $m_PartyBuff_Time == $loc_time )
+					{
+localvar("#a1","");
+GetTextRes(8001,11379,"#a1");
+						PostPlayerInfo(#a1,RGB(255,0,0));
+
+						return;
+					}
+					$m_PartyBuff_Time = $loc_time;
+					DelNewState(6330,1);
+					DelNewState(6331,1);
+					DelNewState(6332,1);
+					TakeActive( 200 );
+					AddNewState(6330,1);
+					
+					$m_PartyScore_Change = 1;
+					$m_Party_2 = 1;
+localvar("#a1","");
+GetTextRes(8001,11380,"#a1");
+					#loc_VaribleHK = #a1;
+
+					#loc_VaribleHK = #loc_VaribleHK + $m_PartyScore_temp;
+					ShowString(840,245,#loc_VaribleHK,1);
+					DelNewState(3012,1);
+					DelNewState(3012,2);
+					DelNewState(3012,3);
+					
+					AddNewState(1267,1);
+					AddSkill(12401,1);
+					AddSkillToShortCutBar(12401,0);
+					
+					$loc_player += 1;
+					SetRgnVar(0,"@nRegion","$loc_Player_Num",$loc_player);
+					ChangeRgn($loc_rgn,336,119);
+					return;
+				}
+				return;
+			}
+			if( $m_TalkRet == 778 )
+			{
+				localvar("#loc_VaribleHK2","");
+localvar("#a1","");
+GetTextRes(8001,11381,"#a1");
+				#loc_VaribleHK2 = #a1;
+
+				if( $loc_getbuff == 1 && $m_PartyBuff_Time != $loc_time )
+				{
+localvar("#a1","");
+GetTextRes(8001,11382,"#a1");
+					#loc_VaribleHK2 = #a1;
+
+				}
+				GameMessage(#loc_VaribleHK2,1);
+				if( $m_TalkRet == 0 )
+				{
+					return;
+				}
+				if( $m_TalkRet == 1 )
+				{
+					if( GetActive() < 600 )
+					{
+localvar("#a1","");
+GetTextRes(8001,11383,"#a1");
+						PostPlayerInfo(#a1,RGB(255,0,0));
+
+						return;
+					}
+					if( $m_PartyBuff_Time == $loc_time )
+					{
+localvar("#a1","");
+GetTextRes(8001,11384,"#a1");
+						PostPlayerInfo(#a1,RGB(255,0,0));
+
+						return;
+					}
+					$m_PartyBuff_Time = $loc_time;
+					DelNewState(6330,1);
+					DelNewState(6331,1);
+					DelNewState(6332,1);
+					TakeActive( 600 );
+					AddNewState(6331,1);
+					
+					$m_PartyScore_Change = 1;
+					$m_Party_2 = 1;
+localvar("#a1","");
+GetTextRes(8001,11385,"#a1");
+					#loc_VaribleHK = #a1;
+
+					#loc_VaribleHK = #loc_VaribleHK + $m_PartyScore_temp;
+					ShowString(840,245,#loc_VaribleHK,1);
+					DelNewState(3012,1);
+					DelNewState(3012,2);
+					DelNewState(3012,3);
+					
+					AddNewState(1267,1);
+					AddSkill(12401,1);
+					AddSkillToShortCutBar(12401,0);
+					
+					$loc_player += 1;
+					SetRgnVar(0,"@nRegion","$loc_Player_Num",$loc_player);
+					ChangeRgn($loc_rgn,336,119);
+					return;
+				}
+				return;
+			}
+			if( $m_TalkRet == 777 )
+			{
+				localvar("#loc_VaribleHK2","");
+localvar("#a1","");
+GetTextRes(8001,11386,"#a1");
+				#loc_VaribleHK2 = #a1;
+
+				if( $loc_getbuff == 1 && $m_PartyBuff_Time != $loc_time )
+				{
+localvar("#a1","");
+GetTextRes(8001,11387,"#a1");
+					#loc_VaribleHK2 = #a1;
+
+				}
+				GameMessage(#loc_VaribleHK2,1);
+				if( $m_TalkRet == 0 )
+				{
+					return;
+				}
+				if( $m_TalkRet == 1 )
+				{
+					if( GetActive() < 1100 )
+					{
+localvar("#a1","");
+GetTextRes(8001,11388,"#a1");
+						PostPlayerInfo(#a1,RGB(255,0,0));
+
+						return;
+					}
+					if( $m_PartyBuff_Time == $loc_time )
+					{
+localvar("#a1","");
+GetTextRes(8001,11389,"#a1");
+						PostPlayerInfo(#a1,RGB(255,0,0));
+
+						return;
+					}
+					$m_PartyBuff_Time = $loc_time;
+					DelNewState(6330,1);
+					DelNewState(6331,1);
+					DelNewState(6332,1);
+					TakeActive( 1100 );
+					AddNewState(6332,1);
+					
+					$m_PartyScore_Change = 1;
+					$m_Party_2 = 1;
+localvar("#a1","");
+GetTextRes(8001,11390,"#a1");
+					#loc_VaribleHK = #a1;
+
+					#loc_VaribleHK = #loc_VaribleHK + $m_PartyScore_temp;
+					ShowString(840,245,#loc_VaribleHK,1);
+					DelNewState(3012,1);
+					DelNewState(3012,2);
+					DelNewState(3012,3);
+					
+					AddNewState(1267,1);
+					AddSkill(12401,1);
+					AddSkillToShortCutBar(12401,0);
+					
+					$loc_player += 1;
+					SetRgnVar(0,"@nRegion","$loc_Player_Num",$loc_player);
+					ChangeRgn($loc_rgn,336,119);
+					return;
+				}
+				return;
+			}
+			if( $m_TalkRet == 776 )
+			{
+					if( GetGoodsFree() < 1 )
+	{
+localvar("#a1","");
+GetTextRes(8001,11333,"#a1");
+		PostPlayerInfo(#a1,RGB(255,0,0));
+
+		return;
+	}
+				$m_PartyScore_Change = 1;
+				$m_Party_2 = 1;
+localvar("#a1","");
+GetTextRes(8001,11391,"#a1");
+				#loc_VaribleHK = #a1;
+
+				#loc_VaribleHK = #loc_VaribleHK + $m_PartyScore_temp;
+				ShowString(840,245,#loc_VaribleHK,1);
+				DelNewState(3012,1);
+				DelNewState(3012,2);
+				DelNewState(3012,3);
+				
+				AddNewState(1267,1);
+				AddSkill(12401,1);
+				AddSkillToShortCutBar(12401,0);
+				
+				$loc_player += 1;
+				SetRgnVar(0,"@nRegion","$loc_Player_Num",$loc_player);
+				ChangeRgn($loc_rgn,336,119);
+				return;
+			}
+			if( $m_TalkRet == 1 )
+			{
+				return;
+			}
+			return;
+		}
+		if( $m_TalkRet == 1 )
+		{
+			return;
+		}
+		return;
+	}
+	//3:00-4:00
+	if( $loc_PartyTime >= 1500 && $loc_PartyTime <= 1600 )
+	{
+		//非偶数日不能参与该时间段的活动
+		if( DayOfWeek(Time()) != 2 && DayOfWeek(Time()) != 4 && DayOfWeek(Time()) != 6 )
+		{
+			localvar("#loc_VaribleHK1","");
+localvar("#a1","");
+GetTextRes(8001,11392,"#a1");
+			#loc_VaribleHK1 = #a1;
+
+			TalkBox(#loc_VaribleHK1,"CloseBtn",1,1,0);
+			EndTalkBox();
+			if( $m_TalkRet == 1 )
+			{
+				return;
+			}
+			return;
+		}
+		//未兑换昨天的积分
+		if( $m_PartyScore_Change == 1 && $m_Party_1 == 0 )
+		{
+			localvar("#loc_VaribleHK1","");
+localvar("#a1","");
+GetTextRes(8001,11393,"#a1");
+			#loc_VaribleHK1 = #a1;
+
+			TalkBox(#loc_VaribleHK1,"CloseBtn",1,1,0);
+			EndTalkBox();
+			if( $m_TalkRet == 1 )
+			{
+				return;
+			}
+			return;
+		}
+		localvar("#loc_VaribleHK1","");
+localvar("#a1","");
+GetTextRes(8001,11394,"#a1");
+		#loc_VaribleHK1 = #a1;
+
+		TalkBox(#loc_VaribleHK1,"ContinueBtn",1,"CloseBtn",1,1,0);
+		EndTalkBox();
+		if( $m_TalkRet == 0 )
+		{
+localvar("#a1","");
+GetTextRes(8001,11395,"#a1");
+			#loc_VaribleHK1 = #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11396,"#a1");
+			#loc_VaribleHK1 = #loc_VaribleHK1 + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11397,"#a1");
+			#loc_VaribleHK1 = #loc_VaribleHK1 + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11398,"#a1");
+			#loc_VaribleHK1 = #loc_VaribleHK1 + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11399,"#a1");
+			#loc_VaribleHK1 = #loc_VaribleHK1 + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11400,"#a1");
+			#loc_VaribleHK1 = #loc_VaribleHK1 + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11401,"#a1");
+			#loc_VaribleHK1 = #loc_VaribleHK1 + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11402,"#a1");
+			#loc_VaribleHK1 = #loc_VaribleHK1 + #a1;
+
+			TalkBox(#loc_VaribleHK1,"CloseBtn",1,1,0);
+			EndTalkBox();
+			if( $m_TalkRet == 779 )
+			{
+				localvar("#loc_VaribleHK2","");
+localvar("#a1","");
+GetTextRes(8001,11403,"#a1");
+				#loc_VaribleHK2 = #a1;
+
+				if( $loc_getbuff == 1 && $m_PartyBuff_Time != $loc_time )
+				{
+localvar("#a1","");
+GetTextRes(8001,11404,"#a1");
+					#loc_VaribleHK2 = #a1;
+
+				}
+				GameMessage(#loc_VaribleHK2,1);
+				if( $m_TalkRet == 0 )
+				{
+					return;
+				}
+				if( $m_TalkRet == 1 )
+				{
+					if( GetActive() < 200 )
+					{
+localvar("#a1","");
+GetTextRes(8001,11405,"#a1");
+						PostPlayerInfo(#a1,RGB(255,0,0));
+
+						return;
+					}
+					if( $m_PartyBuff_Time == $loc_time )
+					{
+localvar("#a1","");
+GetTextRes(8001,11406,"#a1");
+						PostPlayerInfo(#a1,RGB(255,0,0));
+
+						return;
+					}
+					$m_PartyBuff_Time = $loc_time;
+					DelNewState(6330,1);
+					DelNewState(6331,1);
+					DelNewState(6332,1);
+					TakeActive( 200 );
+					AddNewState(6330,1);
+					
+					$m_PartyScore_Change = 1;
+					$m_Party_1 = 1;
+localvar("#a1","");
+GetTextRes(8001,11407,"#a1");
+					#loc_VaribleHK = #a1;
+
+					#loc_VaribleHK = #loc_VaribleHK + $m_PartyScore_temp;
+					ShowString(840,245,#loc_VaribleHK,1);
+					DelNewState(3012,1);
+					DelNewState(3012,2);
+					DelNewState(3012,3);
+					
+					AddNewState(1267,1);
+					AddSkill(12401,1);
+					AddSkillToShortCutBar(12401,0);
+					
+					$loc_player += 1;
+					SetRgnVar(0,"@nRegion","$loc_Player_Num",$loc_player);
+					ChangeRgn($loc_rgn,231,311);
+					return;
+				}
+				return;
+			}
+			if( $m_TalkRet == 778 )
+			{
+				localvar("#loc_VaribleHK2","");
+localvar("#a1","");
+GetTextRes(8001,11408,"#a1");
+				#loc_VaribleHK2 = #a1;
+
+				if( $loc_getbuff == 1 && $m_PartyBuff_Time != $loc_time )
+				{
+localvar("#a1","");
+GetTextRes(8001,11409,"#a1");
+					#loc_VaribleHK2 = #a1;
+
+				}
+				GameMessage(#loc_VaribleHK2,1);
+				if( $m_TalkRet == 0 )
+				{
+					return;
+				}
+				if( $m_TalkRet == 1 )
+				{
+					if( GetActive() < 600 )
+					{
+localvar("#a1","");
+GetTextRes(8001,11410,"#a1");
+						PostPlayerInfo(#a1,RGB(255,0,0));
+
+						return;
+					}
+					if( $m_PartyBuff_Time == $loc_time )
+					{
+localvar("#a1","");
+GetTextRes(8001,11411,"#a1");
+						PostPlayerInfo(#a1,RGB(255,0,0));
+
+						return;
+					}
+					$m_PartyBuff_Time = $loc_time;
+					DelNewState(6330,1);
+					DelNewState(6331,1);
+					DelNewState(6332,1);
+					TakeActive( 600 );
+					AddNewState(6331,1);
+					
+					$m_PartyScore_Change = 1;
+					$m_Party_1 = 1;
+localvar("#a1","");
+GetTextRes(8001,11412,"#a1");
+					#loc_VaribleHK = #a1;
+
+					#loc_VaribleHK = #loc_VaribleHK + $m_PartyScore_temp;
+					ShowString(840,245,#loc_VaribleHK,1);
+					DelNewState(3012,1);
+					DelNewState(3012,2);
+					DelNewState(3012,3);
+					
+					AddNewState(1267,1);
+					AddSkill(12401,1);
+					AddSkillToShortCutBar(12401,0);
+					
+					$loc_player += 1;
+					SetRgnVar(0,"@nRegion","$loc_Player_Num",$loc_player);
+					ChangeRgn($loc_rgn,231,311);
+					return;
+				}
+				return;
+			}
+			if( $m_TalkRet == 777 )
+			{
+				localvar("#loc_VaribleHK2","");
+localvar("#a1","");
+GetTextRes(8001,11413,"#a1");
+				#loc_VaribleHK2 = #a1;
+
+				if( $loc_getbuff == 1 && $m_PartyBuff_Time != $loc_time )
+				{
+localvar("#a1","");
+GetTextRes(8001,11414,"#a1");
+					#loc_VaribleHK2 = #a1;
+
+				}
+				GameMessage(#loc_VaribleHK2,1);
+				if( $m_TalkRet == 0 )
+				{
+					return;
+				}
+				if( $m_TalkRet == 1 )
+				{
+					if( GetActive() < 1100 )
+					{
+localvar("#a1","");
+GetTextRes(8001,11415,"#a1");
+						PostPlayerInfo(#a1,RGB(255,0,0));
+
+						return;
+					}
+					if( $m_PartyBuff_Time == $loc_time )
+					{
+localvar("#a1","");
+GetTextRes(8001,11416,"#a1");
+						PostPlayerInfo(#a1,RGB(255,0,0));
+
+						return;
+					}
+					$m_PartyBuff_Time = $loc_time;
+					DelNewState(6330,1);
+					DelNewState(6331,1);
+					DelNewState(6332,1);
+					TakeActive( 1100 );
+					AddNewState(6332,1);
+					
+					$m_PartyScore_Change = 1;
+					$m_Party_1 = 1;
+localvar("#a1","");
+GetTextRes(8001,11417,"#a1");
+					#loc_VaribleHK = #a1;
+
+					#loc_VaribleHK = #loc_VaribleHK + $m_PartyScore_temp;
+					ShowString(840,245,#loc_VaribleHK,1);
+					DelNewState(3012,1);
+					DelNewState(3012,2);
+					DelNewState(3012,3);
+					
+					AddNewState(1267,1);
+					AddSkill(12401,1);
+					AddSkillToShortCutBar(12401,0);
+					
+					$loc_player += 1;
+					SetRgnVar(0,"@nRegion","$loc_Player_Num",$loc_player);
+					ChangeRgn($loc_rgn,231,311);
+					return;
+				}
+				return;
+			}
+			if( $m_TalkRet == 776 )
+			{
+					if( GetGoodsFree() < 1 )
+	{
+localvar("#a1","");
+GetTextRes(8001,11333,"#a1");
+		PostPlayerInfo(#a1,RGB(255,0,0));
+
+		return;
+	}
+				$m_PartyScore_Change = 1;
+				$m_Party_1 = 1;
+localvar("#a1","");
+GetTextRes(8001,11418,"#a1");
+				#loc_VaribleHK = #a1;
+
+				#loc_VaribleHK = #loc_VaribleHK + $m_PartyScore_temp;
+				ShowString(840,245,#loc_VaribleHK,1);
+				DelNewState(3012,1);
+				DelNewState(3012,2);
+				DelNewState(3012,3);
+				
+				AddNewState(1267,1);
+				AddSkill(12401,1);
+				AddSkillToShortCutBar(12401,0);
+				
+				$loc_player += 1;
+				SetRgnVar(0,"@nRegion","$loc_Player_Num",$loc_player);
+				ChangeRgn($loc_rgn,231,311);
+				return;
+			}
+			if( $m_TalkRet == 1 )
+			{
+				return;
+			}
+			return;
+		}
+		if( $m_TalkRet == 1 )
+		{
+			return;
+		}
+		return;
+	}
+	//9:00-10:00
+	if( $loc_PartyTime >= 2100 && $loc_PartyTime <= 2200 )
+	{
+		//非偶数日不能在该时间段进入活动
+		if( DayOfWeek(Time()) != 2 && DayOfWeek(Time()) != 4 && DayOfWeek(Time()) != 6 )
+		{
+			localvar("#loc_VaribleHK1","");
+localvar("#a1","");
+GetTextRes(8001,11419,"#a1");
+			#loc_VaribleHK1 = #a1;
+
+			TalkBox(#loc_VaribleHK1,"CloseBtn",1,1,0);
+			EndTalkBox();
+			if( $m_TalkRet == 1 )
+			{
+				return;
+			}
+			return;
+		}
+		//未兑换昨天的积分
+		if( $m_PartyScore_Change == 1 && $m_Party_2 == 0 )
+		{
+			localvar("#loc_VaribleHK1","");
+localvar("#a1","");
+GetTextRes(8001,11420,"#a1");
+			#loc_VaribleHK1 = #a1;
+
+			TalkBox(#loc_VaribleHK1,"CloseBtn",1,1,0);
+			EndTalkBox();
+			if( $m_TalkRet == 1 )
+			{
+				return;
+			}
+			return;
+		}
+		localvar("#loc_VaribleHK1","");
+localvar("#a1","");
+GetTextRes(8001,11421,"#a1");
+		#loc_VaribleHK1 = #a1;
+
+		TalkBox(#loc_VaribleHK1,"ContinueBtn",1,"CloseBtn",1,1,0);
+		EndTalkBox();
+		if( $m_TalkRet == 0 )
+		{
+localvar("#a1","");
+GetTextRes(8001,11422,"#a1");
+			#loc_VaribleHK1 = #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11423,"#a1");
+			#loc_VaribleHK1 = #loc_VaribleHK1 + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11424,"#a1");
+			#loc_VaribleHK1 = #loc_VaribleHK1 + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11425,"#a1");
+			#loc_VaribleHK1 = #loc_VaribleHK1 + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11426,"#a1");
+			#loc_VaribleHK1 = #loc_VaribleHK1 + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11427,"#a1");
+			#loc_VaribleHK1 = #loc_VaribleHK1 + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11428,"#a1");
+			#loc_VaribleHK1 = #loc_VaribleHK1 + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11429,"#a1");
+			#loc_VaribleHK1 = #loc_VaribleHK1 + #a1;
+
+			TalkBox(#loc_VaribleHK1,"CloseBtn",1,1,0);
+			EndTalkBox();
+			if( $m_TalkRet == 779 )
+			{
+				localvar("#loc_VaribleHK2","");
+localvar("#a1","");
+GetTextRes(8001,11430,"#a1");
+				#loc_VaribleHK2 = #a1;
+
+				if( $loc_getbuff == 1 && $m_PartyBuff_Time != $loc_time )
+				{
+localvar("#a1","");
+GetTextRes(8001,11431,"#a1");
+					#loc_VaribleHK2 = #a1;
+
+				}
+				GameMessage(#loc_VaribleHK2,1);
+				if( $m_TalkRet == 0 )
+				{
+					return;
+				}
+				if( $m_TalkRet == 1 )
+				{
+					if( GetActive() < 200 )
+					{
+localvar("#a1","");
+GetTextRes(8001,11432,"#a1");
+						PostPlayerInfo(#a1,RGB(255,0,0));
+
+						return;
+					}
+					if( $m_PartyBuff_Time == $loc_time )
+					{
+localvar("#a1","");
+GetTextRes(8001,11433,"#a1");
+						PostPlayerInfo(#a1,RGB(255,0,0));
+
+						return;
+					}
+					$m_PartyBuff_Time = $loc_time;
+					DelNewState(6330,1);
+					DelNewState(6331,1);
+					DelNewState(6332,1);
+					TakeActive( 200 );
+					AddNewState(6330,1);
+					
+					$m_PartyScore_Change = 1;
+					$m_Party_2 = 1;
+localvar("#a1","");
+GetTextRes(8001,11434,"#a1");
+					#loc_VaribleHK = #a1;
+
+					#loc_VaribleHK = #loc_VaribleHK + $m_PartyScore_temp;
+					ShowString(840,245,#loc_VaribleHK,1);
+					DelNewState(3012,1);
+					DelNewState(3012,2);
+					DelNewState(3012,3);
+					
+					AddNewState(1267,1);
+					AddSkill(12401,1);
+					AddSkillToShortCutBar(12401,0);
+					
+					$loc_player += 1;
+					SetRgnVar(0,"@nRegion","$loc_Player_Num",$loc_player);
+					ChangeRgn($loc_rgn,231,311);
+					return;
+				}
+				return;
+			}
+			if( $m_TalkRet == 778 )
+			{
+				localvar("#loc_VaribleHK2","");
+localvar("#a1","");
+GetTextRes(8001,11435,"#a1");
+				#loc_VaribleHK2 = #a1;
+
+				if( $loc_getbuff == 1 && $m_PartyBuff_Time != $loc_time )
+				{
+localvar("#a1","");
+GetTextRes(8001,11436,"#a1");
+					#loc_VaribleHK2 = #a1;
+
+				}
+				GameMessage(#loc_VaribleHK2,1);
+				if( $m_TalkRet == 0 )
+				{
+					return;
+				}
+				if( $m_TalkRet == 1 )
+				{
+					if( GetActive() < 600 )
+					{
+localvar("#a1","");
+GetTextRes(8001,11437,"#a1");
+						PostPlayerInfo(#a1,RGB(255,0,0));
+
+						return;
+					}
+					if( $m_PartyBuff_Time == $loc_time )
+					{
+localvar("#a1","");
+GetTextRes(8001,11438,"#a1");
+						PostPlayerInfo(#a1,RGB(255,0,0));
+
+						return;
+					}
+					$m_PartyBuff_Time = $loc_time;
+					DelNewState(6330,1);
+					DelNewState(6331,1);
+					DelNewState(6332,1);
+					TakeActive( 600 );
+					AddNewState(6331,1);
+					
+					$m_PartyScore_Change = 1;
+					$m_Party_2 = 1;
+localvar("#a1","");
+GetTextRes(8001,11439,"#a1");
+					#loc_VaribleHK = #a1;
+
+					#loc_VaribleHK = #loc_VaribleHK + $m_PartyScore_temp;
+					ShowString(840,245,#loc_VaribleHK,1);
+					DelNewState(3012,1);
+					DelNewState(3012,2);
+					DelNewState(3012,3);
+					
+					AddNewState(1267,1);
+					AddSkill(12401,1);
+					AddSkillToShortCutBar(12401,0);
+					
+					$loc_player += 1;
+					SetRgnVar(0,"@nRegion","$loc_Player_Num",$loc_player);
+					ChangeRgn($loc_rgn,231,311);
+					return;
+				}
+				return;
+			}
+			if( $m_TalkRet == 777 )
+			{
+				localvar("#loc_VaribleHK2","");
+localvar("#a1","");
+GetTextRes(8001,11440,"#a1");
+				#loc_VaribleHK2 = #a1;
+
+				if( $loc_getbuff == 1 && $m_PartyBuff_Time != $loc_time )
+				{
+localvar("#a1","");
+GetTextRes(8001,11441,"#a1");
+					#loc_VaribleHK2 = #a1;
+
+				}
+				GameMessage(#loc_VaribleHK2,1);
+				if( $m_TalkRet == 0 )
+				{
+					return;
+				}
+				if( $m_TalkRet == 1 )
+				{
+					if( GetActive() < 1100 )
+					{
+localvar("#a1","");
+GetTextRes(8001,11442,"#a1");
+						PostPlayerInfo(#a1,RGB(255,0,0));
+
+						return;
+					}
+					if( $m_PartyBuff_Time == $loc_time )
+					{
+localvar("#a1","");
+GetTextRes(8001,11443,"#a1");
+						PostPlayerInfo(#a1,RGB(255,0,0));
+
+						return;
+					}
+					$m_PartyBuff_Time = $loc_time;
+					DelNewState(6330,1);
+					DelNewState(6331,1);
+					DelNewState(6332,1);
+					TakeActive( 1100 );
+					AddNewState(6332,1);
+					
+					$m_PartyScore_Change = 1;
+					$m_Party_2 = 1;
+localvar("#a1","");
+GetTextRes(8001,11444,"#a1");
+					#loc_VaribleHK = #a1;
+
+					#loc_VaribleHK = #loc_VaribleHK + $m_PartyScore_temp;
+					ShowString(840,245,#loc_VaribleHK,1);
+					DelNewState(3012,1);
+					DelNewState(3012,2);
+					DelNewState(3012,3);
+					
+					AddNewState(1267,1);
+					AddSkill(12401,1);
+					AddSkillToShortCutBar(12401,0);
+					
+					$loc_player += 1;
+					SetRgnVar(0,"@nRegion","$loc_Player_Num",$loc_player);
+					ChangeRgn($loc_rgn,231,311);
+					return;
+				}
+				return;
+			}
+			if( $m_TalkRet == 776 )
+			{
+				if( GetGoodsFree() < 1 )
+	{
+localvar("#a1","");
+GetTextRes(8001,11333,"#a1");
+		PostPlayerInfo(#a1,RGB(255,0,0));
+
+		return;
+	}
+				$m_PartyScore_Change = 1;
+				$m_Party_2 = 1;
+localvar("#a1","");
+GetTextRes(8001,11445,"#a1");
+				#loc_VaribleHK = #a1;
+
+				#loc_VaribleHK = #loc_VaribleHK + $m_PartyScore_temp;
+				ShowString(840,245,#loc_VaribleHK,1);
+				DelNewState(3012,1);
+				DelNewState(3012,2);
+				DelNewState(3012,3);
+				
+				AddNewState(1267,1);
+				AddSkill(12401,1);
+				AddSkillToShortCutBar(12401,0);
+				
+				$loc_player += 1;
+				SetRgnVar(0,"@nRegion","$loc_Player_Num",$loc_player);
+				ChangeRgn($loc_rgn,231,311);
+				return;
+			}
+			if( $m_TalkRet == 1 )
+			{
+				return;
+			}
+			return;
+		}
+		if( $m_TalkRet == 1 )
+		{
+			return;
+		}
+		return;
+	}
+	localvar("#loc_VaribleHK1","");
+localvar("#a1","");
+GetTextRes(8001,11446,"#a1");
+	#loc_VaribleHK1 = #a1;
+
+	TalkBox(#loc_VaribleHK1,"CloseBtn",1,1,0);
+	EndTalkBox();
+	if( $m_TalkRet == 1 )
+	{
+		return;
+	}
+	return;
+}
+if( $m_TalkRet == 997 )
+{
+	BuyGoods("E10003Aby");
+	return;
+}
+if( $m_TalkRet == 996 )
+{
+	localvar("#loc_VaribleHK1","");
+localvar("#a1","");
+GetTextRes(8001,11447,"#a1");
+	#loc_VaribleHK1 = #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11448,"#a1");
+	#loc_VaribleHK1 = #loc_VaribleHK1 + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11449,"#a1");
+	#loc_VaribleHK1 = #loc_VaribleHK1 + "[BR][BR][GOODS 1 1 INS0154][/GOODS]" + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11450,"#a1");
+	#loc_VaribleHK1 = #loc_VaribleHK1 + "[BR][BR][GOODS 2 1 INS0155][/GOODS]" + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11451,"#a1");
+	#loc_VaribleHK1 = #loc_VaribleHK1 + "[BR][BR][GOODS 3 1 INS0156][/GOODS]" + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11452,"#a1");
+	#loc_VaribleHK1 = #loc_VaribleHK1 + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11453,"#a1");
+	#loc_VaribleHK1 = #loc_VaribleHK1 + "[BR][BR][GOODS 4 1 INS0157][/GOODS]" + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11454,"#a1");
+	#loc_VaribleHK1 = #loc_VaribleHK1 + "[BR][BR][GOODS 5 1 INS0158][/GOODS]" + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11455,"#a1");
+	#loc_VaribleHK1 = #loc_VaribleHK1 + "[BR][BR][GOODS 6 1 INS0159][/GOODS]" + #a1;
+
+	
+	TalkBox(#loc_VaribleHK1,"AcceptBtn",1,"CloseBtn",1,1,0);
+	EndTalkBox();
+	
+	if( $m_TalkRet == 1 )
+	{
+		return;
+	}
+	
+	if( $m_TalkRet == 0 )
+	{
+		if( $Choose_Ret == 1 )
+		{
+			if( GetMedal("INS0154") >= 1 )
+			{
+localvar("#a1","");
+GetTextRes(8001,11456,"#a1");
+				PostPlayerInfo(#a1,RGB(255,0,0));
+
+				return;
+			}
+			if( $m_PartyScore_today < 70000 )
+			{
+localvar("#a1","");
+GetTextRes(8001,11457,"#a1");
+				PostPlayerInfo(#a1,RGB(255,0,0));
+
+				return;
+			}
+			AddMedal("INS0154");
+localvar("#a1","");
+GetTextRes(8001,11458,"#a1");
+			PostPlayerInfo(#a1,RGB(255,255,0));
+
+			return;
+		}
+		if( $Choose_Ret == 2 )
+		{
+			if( GetMedal("INS0155") >= 1 )
+			{
+localvar("#a1","");
+GetTextRes(8001,11459,"#a1");
+				PostPlayerInfo(#a1,RGB(255,0,0));
+
+				return;
+			}
+			if( $m_PartyScore_today < 150000 )
+			{
+localvar("#a1","");
+GetTextRes(8001,11460,"#a1");
+				PostPlayerInfo(#a1,RGB(255,0,0));
+
+				return;
+			}
+			AddMedal("INS0155");
+localvar("#a1","");
+GetTextRes(8001,11461,"#a1");
+			PostPlayerInfo(#a1,RGB(255,255,0));
+
+			return;
+		}
+		if( $Choose_Ret == 3 )
+		{
+			if( GetMedal("INS0156") >= 1 )
+			{
+localvar("#a1","");
+GetTextRes(8001,11462,"#a1");
+				PostPlayerInfo(#a1,RGB(255,0,0));
+
+				return;
+			}
+			if( $m_TalkRet == 0 )
+			{
+				if( $m_PartyScore_today < 350000 )
+				{
+localvar("#a1","");
+GetTextRes(8001,11463,"#a1");
+					PostPlayerInfo(#a1,RGB(255,0,0));
+
+					return;
+				}
+			}
+			AddMedal("INS0156");
+localvar("#a1","");
+GetTextRes(8001,11464,"#a1");
+			PostPlayerInfo(#a1,RGB(255,255,0));
+
+			return;
+		}
+		if( $Choose_Ret == 4 )
+		{
+			if( GetMedal("INS0157") >= 1 )
+			{
+localvar("#a1","");
+GetTextRes(8001,11465,"#a1");
+				PostPlayerInfo(#a1,RGB(255,0,0));
+
+				return;
+			}
+			if( $m_PartyScore_history < 730000 )
+			{
+localvar("#a1","");
+GetTextRes(8001,11466,"#a1");
+				PostPlayerInfo(#a1,RGB(255,0,0));
+
+				return;
+			}
+			AddMedal("INS0157");
+localvar("#a1","");
+GetTextRes(8001,11467,"#a1");
+			PostPlayerInfo(#a1,RGB(255,255,0));
+
+			return;
+		}
+		if( $Choose_Ret == 5 )
+		{
+			if( GetMedal("INS0158") >= 1 )
+			{
+localvar("#a1","");
+GetTextRes(8001,11468,"#a1");
+				PostPlayerInfo(#a1,RGB(255,0,0));
+
+				return;
+			}
+			if( $m_PartyScore_history < 1500000 )
+			{
+localvar("#a1","");
+GetTextRes(8001,11469,"#a1");
+				PostPlayerInfo(#a1,RGB(255,0,0));
+
+				return;
+			}
+			AddMedal("INS0158");
+localvar("#a1","");
+GetTextRes(8001,11470,"#a1");
+			PostPlayerInfo(#a1,RGB(255,255,0));
+
+			return;
+		}
+		if( $Choose_Ret == 6 )
+		{
+			if( GetMedal("INS0159") >= 1 )
+			{
+localvar("#a1","");
+GetTextRes(8001,11471,"#a1");
+				PostPlayerInfo(#a1,RGB(255,0,0));
+
+				return;
+			}
+			if( $m_PartyScore_history < 3000000 )
+			{
+localvar("#a1","");
+GetTextRes(8001,11472,"#a1");
+				PostPlayerInfo(#a1,RGB(255,0,0));
+
+				return;
+			}
+			AddMedal("INS0159");
+localvar("#a1","");
+GetTextRes(8001,11473,"#a1");
+			PostPlayerInfo(#a1,RGB(255,255,0));
+
+			return;
+		}
+	}
+	return;
+}
+if( $m_TalkRet == 995 )
+{
+	if( $m_PartyScore_temp <= 3463 )
+	{
+		//玩家今天已经参与过活动但是没有得到积分的情况
+		//置积分兑换雪贝标志为1
+		$m_PartyScore_Change = 0;
+localvar("#a1","");
+GetTextRes(8001,11474,"#a1");
+		PostPlayerInfo(#a1,RGB(255,0,0));
+
+		return;
+	}
+	if( GetGoodsFree() < 1 )
+	{
+localvar("#a1","");
+GetTextRes(8001,11475,"#a1");
+		PostPlayerInfo(#a1,RGB(255,0,0));
+
+		return;
+	}
+	$loc_lieshoupai_num = $m_PartyScore_temp / 3463;
+	Int( $loc_lieshoupai_num );
+	localvar("#loc_VaribleHK1","");
+localvar("#a1","");
+GetTextRes(8001,11476,"#a1");
+	#loc_VaribleHK1 = #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11477,"#a1");
+localvar("#a2","");
+GetTextRes(8001,11478,"#a2");
+	#loc_VaribleHK1 = #loc_VaribleHK1 + #a1 + $m_PartyScore_temp + #a2;
+
+localvar("#a1","");
+GetTextRes(8001,11479,"#a1");
+	#loc_VaribleHK1 = #loc_VaribleHK1 + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11480,"#a1");
+	#loc_VaribleHK1 = #loc_VaribleHK1 + #a1 + $loc_lieshoupai_num;
+
+localvar("#a1","");
+GetTextRes(8001,11481,"#a1");
+	#loc_VaribleHK1 = #loc_VaribleHK1 + #a1;
+
+	TalkBox(#loc_VaribleHK1,"AcceptBtn",1,1,0);
+	EndTalkBox();
+	if( $m_TalkRet == 1 )
+	{
+		return;
+	}
+	if( $m_TalkRet == 0 )
+	{
+		//置积分兑换雪贝标志为1
+		$m_PartyScore_Change = 0;
+		$m_PartyScore_temp = $m_PartyScore_temp - ( Int( $loc_lieshoupai_num ) * 3463 );
+localvar("#a1","");
+GetTextRes(8001,11482,"#a1");
+localvar("#a2","");
+GetTextRes(8001,11483,"#a2");
+		PostPlayerInfo(#a1 + $loc_lieshoupai_num + #a2,RGB(255,255,0));
+
+		AddGoods("QH00000230",$loc_lieshoupai_num);
+		return;
+	}
+	return;
+}
+if( $m_TalkRet == 994 )
+{
+	localvar("#loc_VaribleHK1","");
+localvar("#a1","");
+GetTextRes(8001,11484,"#a1");
+	#loc_VaribleHK1 = #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11485,"#a1");
+	#loc_VaribleHK1 = #loc_VaribleHK1 + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11486,"#a1");
+	#loc_VaribleHK1 = #loc_VaribleHK1 + #a1 + $m_PartyScore_today + "[BR][BR][/COLOR]";
+
+localvar("#a1","");
+GetTextRes(8001,11487,"#a1");
+	#loc_VaribleHK1 = #loc_VaribleHK1 + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11488,"#a1");
+	#loc_VaribleHK1 = #loc_VaribleHK1 + #a1 + $m_PartyScore_history + "[BR][BR][/COLOR]";
+
+localvar("#a1","");
+GetTextRes(8001,11489,"#a1");
+	#loc_VaribleHK1 = #loc_VaribleHK1 + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11490,"#a1");
+	#loc_VaribleHK1 = #loc_VaribleHK1 + #a1 + $m_PartyScore_temp + "[BR][BR][/COLOR]";
+
+	TalkBox(#loc_VaribleHK1,"CloseBtn",1,1,0);
+	EndTalkBox();
+	if( $m_TalkRet == 1 )
+	{
+		return;
+	}
+	return;
+}
+if( $m_TalkRet == 993 )
+{
+	main_back:
+	localvar("#loc_VaribleHK1","");
+localvar("#a1","");
+GetTextRes(8001,11491,"#a1");
+	#loc_VaribleHK1 = #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11492,"#a1");
+	#loc_VaribleHK1 = #loc_VaribleHK1 + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11493,"#a1");
+	#loc_VaribleHK1 = #loc_VaribleHK1 + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11494,"#a1");
+	#loc_VaribleHK1 = #loc_VaribleHK1 + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11495,"#a1");
+	#loc_VaribleHK1 = #loc_VaribleHK1 + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11496,"#a1");
+	#loc_VaribleHK1 = #loc_VaribleHK1 + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11497,"#a1");
+	#loc_VaribleHK1 = #loc_VaribleHK1 + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11498,"#a1");
+	#loc_VaribleHK1 = #loc_VaribleHK1 + #a1;
+
+	
+	TalkBox(#loc_VaribleHK1,"CloseBtn",1,1,0);
+	EndTalkBox();
+	if( $m_TalkRet == 1 )
+	{
+		return;
+	}
+	if( $m_TalkRet == 799 )
+	{
+		localvar("#loc_VaribleHK3","");
+localvar("#a1","");
+GetTextRes(8001,11499,"#a1");
+		#loc_VaribleHK3 = #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11500,"#a1");
+		#loc_VaribleHK3 = #loc_VaribleHK3 + #a1;
+
+		TalkBox(#loc_VaribleHK3,"CloseBtn",1,1,0);
+		EndTalkBox();
+		if( $m_TalkRet == 1 )
+		{
+			return;
+		}
+		if( $m_TalkRet == 666 )
+		{
+			goto("main_back");
+			return;
+		}
+		return;
+	}
+	if( $m_TalkRet == 800 )
+	{
+		localvar("#loc_VaribleHK3","");
+localvar("#a1","");
+GetTextRes(8001,11501,"#a1");
+		#loc_VaribleHK3 = #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11502,"#a1");
+		#loc_VaribleHK3 = #loc_VaribleHK3 + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11503,"#a1");
+		#loc_VaribleHK3 = #loc_VaribleHK3 + #a1;
+
+		TalkBox(#loc_VaribleHK3,"CloseBtn",1,1,0);
+		EndTalkBox();
+		if( $m_TalkRet == 1 )
+		{
+			return;
+		}
+		if( $m_TalkRet == 666 )
+		{
+			goto("main_back");
+			return;
+		}
+		return;
+	}
+	if( $m_TalkRet == 797 )
+	{
+		localvar("#loc_VaribleHK3","");
+localvar("#a1","");
+GetTextRes(8001,11504,"#a1");
+		#loc_VaribleHK3 = #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11505,"#a1");
+		#loc_VaribleHK3 = #loc_VaribleHK3 + #a1;
+
+		TalkBox(#loc_VaribleHK3,"CloseBtn",1,1,0);
+		EndTalkBox();
+		if( $m_TalkRet == 1 )
+		{
+			return;
+		}
+		if( $m_TalkRet == 666 )
+		{
+			goto("main_back");
+			return;
+		}
+		return;
+	}
+	if( $m_TalkRet == 798 )
+	{
+		localvar("#loc_VaribleHK3","");
+localvar("#a1","");
+GetTextRes(8001,11506,"#a1");
+		#loc_VaribleHK3 = #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11507,"#a1");
+		#loc_VaribleHK3 = #loc_VaribleHK3 + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11508,"#a1");
+		#loc_VaribleHK3 = #loc_VaribleHK3 + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11509,"#a1");
+		#loc_VaribleHK3 = #loc_VaribleHK3 + #a1;
+
+		TalkBox(#loc_VaribleHK3,"CloseBtn",1,1,0);
+		EndTalkBox();
+		if( $m_TalkRet == 666 )
+		{
+			goto("main_back");
+			return;
+		}
+		if( $m_TalkRet == 1 )
+		{
+			return;
+		}
+		return;
+	}
+	if( $m_TalkRet == 795 )
+	{
+		localvar("#loc_VaribleHK3","");
+localvar("#a1","");
+GetTextRes(8001,11510,"#a1");
+		#loc_VaribleHK3 = #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11511,"#a1");
+		#loc_VaribleHK3 = #loc_VaribleHK3 + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11512,"#a1");
+		#loc_VaribleHK3 = #loc_VaribleHK3 + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11513,"#a1");
+		#loc_VaribleHK3 = #loc_VaribleHK3 + #a1;
+
+		TalkBox(#loc_VaribleHK3,"CloseBtn",1,1,0);
+		EndTalkBox();
+		if( $m_TalkRet == 1 )
+		{
+			return;
+		}
+		if( $m_TalkRet == 666 )
+		{
+			goto("main_back");
+			return;
+		}
+		return;
+	}
+	if( $m_TalkRet == 794 )
+	{
+		localvar("#loc_VaribleHK3","");
+localvar("#a1","");
+GetTextRes(8001,11514,"#a1");
+		#loc_VaribleHK3 = #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11515,"#a1");
+		#loc_VaribleHK3 = #loc_VaribleHK3 + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11516,"#a1");
+		#loc_VaribleHK3 = #loc_VaribleHK3 + #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11517,"#a1");
+		#loc_VaribleHK3 = #loc_VaribleHK3 + #a1;
+
+		TalkBox(#loc_VaribleHK3,"CloseBtn",1,1,0);
+		EndTalkBox();
+		if( $m_TalkRet == 1 )
+		{
+			return;
+		}
+		if( $m_TalkRet == 666 )
+		{
+			goto("main_back");
+			return;
+		}
+		return;
+	}
+	if( $m_TalkRet == 796 )
+	{
+		localvar("#loc_VaribleHK3","");
+localvar("#a1","");
+GetTextRes(8001,11518,"#a1");
+		#loc_VaribleHK3 = #a1;
+
+localvar("#a1","");
+GetTextRes(8001,11519,"#a1");
+		#loc_VaribleHK3 = #loc_VaribleHK3 + #a1;
+
+		TalkBox(#loc_VaribleHK3,"CloseBtn",1,1,0);
+		EndTalkBox();
+		if( $m_TalkRet == 1 )
+		{
+			return;
+		}
+		if( $m_TalkRet == 666 )
+		{
+			goto("main_back");
+			return;
+		}
+		return;
+	}
+	return;
+}
+return;et == 666 )
+		{
+			goto("main_back");
+			return;
+		}
+		return;
+	}
+	return;
+}
+return; 
