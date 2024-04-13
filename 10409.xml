@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="gb2312" standalone="no"?>
+<Module>
+	<BaseModule id="10409" name="钢铁意志" element="6" type="ModuType_Skill_Active" usetype="1" addsub="Add" attack="0" target="0">
+		<!--常量条件-->
+		<CommonTemplate id="1">
+			<Condition type="Timer" id="6">
+				<Check flag="1"/>
+			</Condition>
+			<Condition type="Event" id="7">
+				<Check eventtype="ET_ExitGame" flag="1"/>
+			</Condition>
+			<Condition type="BaseProperty" id="99">
+				<Check object="self" name="Occu" cmpfun="Equal" value="4"/>
+			</Condition>
+			<Condition type="BaseProperty" id="97">
+				<Check object="self" name="Occu" cmpfun="Equal" value="10"/>
+			</Condition>
+			<Condition type="BaseProperty" id="96">
+				<Check object="self" name="Occu" cmpfun="Equal" value="11"/>
+			</Condition>
+			<ConditionGroup id="99" mode="Mode_Or">
+				<ConditionID value="99"/>
+				<ConditionID value="97"/>
+				<ConditionID value="96"/>
+			</ConditionGroup>
+			<ConditionGroup id="3">
+				<ConditionID value="7"/>
+			</ConditionGroup>
+			<ConditionGroup id="4">
+				<ConditionID value="9"/>
+			</ConditionGroup>
+			<!--作用对象自已-->
+			<OperatObjects type="point" id="2" position="ePos_Self"/>
+		</CommonTemplate>
+		<!--变量条件及条件组-->
+		<CommonTemplate id="2">
+			<Condition type="BaseProperty" id="9">
+				<Check object="self" name="Mp" cmpfun="GreaterEqual" valuename="CostMp"/>
+			</Condition>
+		</CommonTemplate>
+		<ComTemplate id="1"/>
+		<Template id="2">
+			<StaticParam cooldown="10000" consmpname="CostMp"/>
+			<ComTemplate id="2"/>
+			<!--阶段-->
+			<CProcedure name="Fire">
+				<!--准备-->
+				<Step name="Begin">
+					<!--条件检测-->
+					<Do operobjid="2">
+						<CondiGroup id="99" trueret="MR_Continue" falseret="MR_Modu_End">
+							<False>
+								<SendMsg type="SMT_ProcFail" range="MsgRange_Single" value="7"/>
+							</False>
+						</CondiGroup>
+						<CondiGroup id="4" trueret="MR_Continue" falseret="MR_Modu_End">
+							<False>
+								<SendMsg type="SMT_ProcFail" range="MsgRange_Single" value="2"/>
+							</False>
+						</CondiGroup>
+						<CondiGroup trueret="MR_Continue" falseret="MR_Modu_End">
+							<True>
+								<DestObjsChange object="Obj_Dest" type="OP_Dest_Obj_Add"/>
+								<RegisterEvent flag="1" name="ET_ExitGame"/>
+								<RegisterTimer object="Obj_Self" flag="1" future="300"/>
+								<CooldownChange object="Obj_Self" type="OP_TS_Act" value="600"/>
+								<CooldownChange object="Obj_Self" type="OP_TS_Self" value="10000"/>
+								<SendMsg object="Obj_Self" type="SMT_ProcBegin" range="MsgRange_Around"/>
+							</True>
+						</CondiGroup>
+					</Do>
+				</Step>
+				<Step name="Event">
+					<Do operobjid="2">
+						<CondiGroup id="3" trueret="MR_Modu_End" falseret="MR_Continue">									
+							</CondiGroup>
+					</Do>
+				</Step>
+				<Step name="TimeOut">
+					<Do operobjid="2">
+						<CondiGroup trueret="MR_Modu_End">
+							<True>
+								<ObjectPropertyChange object="Obj_Self" name="Mp" operator="Sub" valuename="CostMp"/>
+								<BuffChange bufid="1101" buflvlname="Bufflv" operator="Add"/>
+								<ObjectPropertyChange object="Obj_Self" operator="Update"/>
+								<UnRegisterTimer flag="1"/>
+								<UnRegisterEvent flag="1"/>
+							</True>
+						</CondiGroup>
+					</Do>
+				</Step>
+			</CProcedure>
+		</Template>
+		<Level value="1" tempid="2">
+			<Variablelist name="Bufflv" value="1"/>
+			<Variablelist name="CostMp" value="165"/>
+		</Level>
+		<Level value="2" tempid="2">
+			<Variablelist name="Bufflv" value="2"/>
+			<Variablelist name="CostMp" value="206"/>
+		</Level>
+		<Level value="3" tempid="2">
+			<Variablelist name="Bufflv" value="3"/>
+			<Variablelist name="CostMp" value="246"/>
+		</Level>
+		<Level value="4" tempid="2">
+			<Variablelist name="Bufflv" value="4"/>
+			<Variablelist name="CostMp" value="287"/>
+		</Level>
+		<Level value="5" tempid="2">
+			<Variablelist name="Bufflv" value="5"/>
+			<Variablelist name="CostMp" value="328"/>
+		</Level>
+	</BaseModule>
+</Module>

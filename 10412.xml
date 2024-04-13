@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="gb2312"?>
+<Module>
+	<BaseModule id="10412" name="辉光斩" element="6" type="ModuType_Skill_Active" usetype="1" addsub="Sub" sriptparam="scripts/skills/init.script" attack="0" target="0" cooldown="1">
+		<!--常量条件-->
+		<CommonTemplate id="1">			
+			<Expression id="4" filename="scripts/skills/skill_to_monster.script">
+		</Expression>
+			<Expression id="5" filename="scripts/skills/skill_to_person_aoe.script">
+		</Expression>
+			<Expression id="3" filename="scripts/skills/deductenergy.script">
+		</Expression>
+			<!--判断目标是否可攻击-->
+			<Condition type="ValidObject" id="3">
+				<Check type="Player_Type">			
+					<Object value="EnemyPlayer_Type"/>
+					<Object value="NormalPlayer_Type"/>
+					<Object value="RedPlayer_Type"/>
+					<Object value="PurplePlayer_Type"/>
+				</Check>
+			</Condition>
+			<Condition type="ValidObject" id="4">		
+				<Check type="Monster_Type">
+					<Object value="Monster_Type"/>
+					<Object value="Guard_Type"/>
+					<Object value="Npc_Type"/>
+				</Check>
+			</Condition>
+			<Condition type="Script" id="5">
+				<Check value="scripts/skills/pksub.script"/>
+			</Condition>
+			<Condition type="Timer" id="10">
+				<Check flag="1"/>
+			</Condition>
+			<Condition type="Event" id="6">
+				<Check eventtype="ET_ExitGame" flag="2"/>
+			</Condition>
+			<Condition type="Good" id="11">
+				<Check object="self" place="2" pos="15" goodtype="8" cmpfun="Equal" value="1">
+					<CheckValue type="7" value1="1"/>
+				</Check>
+			</Condition>
+			<Condition type="Good" id="12">
+				<Check object="self" place="2" pos="15" goodtype="8" cmpfun="Equal" value="1">
+					<CheckValue type="7" value1="2"/>
+				</Check>
+			</Condition>		
+			<Condition type="Script" id="50">
+				<Check value="scripts/skills/skill_dot_formonster_tizhi.script"/>
+			</Condition>
+			<Condition type="Script" id="51">
+				<Check value="scripts/skills/skill_dot_forperson_tizhi.script"/>
+			</Condition>
+			<Condition type="Script" id="52">
+				<Check value="scripts/skills/resultjudge.script"/>
+			</Condition>
+			<Condition type="BaseProperty" id="99">
+				<Check object="self" name="Occu" cmpfun="Equal" value="4"/>
+			</Condition>
+			<Condition type="BaseProperty" id="98">
+				<Check object="self" name="Occu" cmpfun="Equal" value="10"/>
+			</Condition>
+			<Condition type="BaseProperty" id="97">
+				<Check object="self" name="Occu" cmpfun="Equal" value="11"/>
+			</Condition>
+			
+			<ConditionGroup id="99" mode="Mode_Or">
+				<ConditionID value="99"/>
+				<ConditionID value="98"/>
+				<ConditionID value="97"/>
+			</ConditionGroup>
+			<ConditionGroup id="2" mode="Mode_Or">
+				<ConditionID value="3"/>
+				<ConditionID value="4"/>
+			</ConditionGroup>
+			<ConditionGroup id="3" mode="Mode_Or">
+				<ConditionID value="11"/>
+				<ConditionID value="12"/>				
+			</ConditionGroup>
+			<ConditionGroup id="4">
+				<ConditionID value="5"/>
+			</ConditionGroup>
+			<ConditionGroup id="5">
+				<ConditionID value="6"/>
+			</ConditionGroup>
+			<ConditionGroup id="6">
+				<ConditionID value="3"/>
+				<ConditionID value="5"/>
+			</ConditionGroup>
+			<ConditionGroup id="7">
+				<ConditionID value="4"/>
+				<ConditionID value="5"/>
+			</ConditionGroup>	
+			<ConditionGroup id="8">
+				<ConditionID value="9"/>
+			</ConditionGroup>
+			<ConditionGroup id="50">
+				<ConditionID value="50"/>
+				<ConditionID value="52"/>
+			</ConditionGroup>
+			<ConditionGroup id="51">
+				<ConditionID value="51"/>
+				<ConditionID value="52"/>
+			</ConditionGroup>	
+			<!--作用对象目标-->
+			<OperatObjects type="circ" id="1" center="ePos_Self" radius="3" condigroup="2"/>
+			<!--作用对象自已-->
+			<OperatObjects type="point" id="2" position="ePos_Self"/>
+		</CommonTemplate>
+		<!--变量条件及条件组-->
+		<CommonTemplate id="2">
+			<Condition type="BaseProperty" id="9">
+				<Check object="self" name="Mp" cmpfun="GreaterEqual" valuename="CostMp"/>
+			</Condition>		
+		</CommonTemplate>
+		<ComTemplate id="1"/>
+		<Template id="2">
+			<StaticParam cooldown="3000" consmpname="CostMp" scriptparamname="ScriptParam"/>
+			<ComTemplate id="2"/>
+			<!--阶段-->
+			<CProcedure name="Fire">
+				<!--准备-->
+				<Step name="Begin">
+					<!--条件检测-->
+					<Do operobjid="2">
+						<!--职业判断-->						
+						<CondiGroup id="99" trueret="MR_Continue" falseret="MR_Modu_End">
+							<False>
+								<SendMsg type="SMT_ProcFail" range="MsgRange_Single" value="7"/>
+							</False>
+						</CondiGroup>
+						<!--装备类型判断-->
+						<CondiGroup id="3" trueret="MR_Continue" falseret="MR_Modu_End">
+							<False>
+								<SendMsg type="SMT_ProcFail" range="MsgRange_Single" value="9"/>
+							</False>
+						</CondiGroup>
+						<!--Mp判断-->
+						<CondiGroup id="8" trueret="MR_Continue" falseret="MR_Modu_End">
+							<False>
+								<SendMsg type="SMT_ProcFail" range="MsgRange_Single" value="2"/>
+							</False>
+						</CondiGroup>
+					</Do>
+					<Do operobjid="1" ret="MR_Continue">
+						<!--可否攻击判断-->
+						<CondiGroup id="2" trueret="MR_Continue" falseret="MR_Modu_End">
+							<False>
+								<SendMsg type="SMT_ProcFail" range="MsgRange_Single" value="5"/>
+							</False>
+						</CondiGroup>
+						<CondiGroup trueret="MR_Continue">
+							<True>
+								<DestObjsChange object="Obj_Dest" type="OP_Dest_Obj_Add"/>
+							</True>
+						</CondiGroup>						
+					</Do>
+					<Do operobjid="2">
+						<CondiGroup trueret="MR_Continue">
+							<True>
+								<DestObjsChange object="Obj_Dest" type="OP_Dest_Obj_Add"/>
+								<RegisterEvent flag="2" name="ET_ExitGame"/>
+								<CooldownChange object="Obj_Self" type="OP_TS_Self" value="3000"/>
+								<CooldownChange object="Obj_Self" type="OP_TS_Act" value="1300"/>
+								<RegisterTimer object="Obj_Self" flag="1" future="500" intel="0" count="0"/>
+								<SendMsg object="Obj_Self" type="SMT_ProcBegin" range="MsgRange_Around"/>
+							</True>
+						</CondiGroup>
+					</Do>
+				</Step>
+				<Step name="Event">
+					<Do operobjid="2">
+						<CondiGroup id="5" trueret="MR_Modu_End" falseret="MR_Continue">
+							<True>	
+								<UnRegisterTimer flag="1"/>						
+								<UnRegisterEvent flag="2"/>								
+							</True>
+						</CondiGroup>
+					</Do>
+				</Step>
+				<Step name="TimeOut">
+					<Do operobjid="1">
+						<CondiGroup id="6" trueret="MR_Continue" falseret="MR_Continue">
+							<True>
+								<Script>
+									<ExpressionID value="5"/>
+								</Script>								
+							</True>
+						</CondiGroup>
+						<CondiGroup id="7" trueret="MR_Continue" falseret="MR_Continue">
+							<True>
+								<Script>
+									<ExpressionID value="4"/>
+								</Script>							
+							</True>							
+						</CondiGroup>
+						<CondiGroup id="4" trueret="MR_Continue" falseret="MR_Continue">
+							<True>
+								<DamageChange object="Obj_Dest" operator="Add" type="DAMAGE_TYPE_HP" valuesname="$DamageHp"/>
+								<DoDamage damageresvaluesname="$DamResult" blastvaluesname="$BlastResult"/>
+							</True>
+						</CondiGroup>
+					</Do>
+				</Step>
+				<Step name="End">
+					<Do operobjid="2">						
+						<CondiGroup trueret="MR_Modu_End">
+							<True>
+								<Script>
+									<ExpressionID value="3"/>
+								</Script>
+								<ObjectPropertyChange object="Obj_Self" name="Mp" operator="Sub" valuename="CostMp"/>							
+								<ObjectPropertyChange object="Obj_Self" operator="Update"/>
+								<UnRegisterTimer flag="1"/>
+							</True>
+						</CondiGroup>
+					</Do>
+				</Step>
+			</CProcedure>
+		</Template>
+		<!--ScriptParam前面的代表技能附加伤害，后面的代表技能强度-->
+		<Level value="1" tempid="2">
+			<Variablelist name="CostMp" value="403"/>
+			<Variablelist name="ScriptParam" value="0,92,0,0,0,0,3860,28"/>
+		</Level>		
+	</BaseModule>
+</Module>

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="gb2312" standalone="no"?>
+<Module>
+	<BaseModule id="10403" name="警戒者姿势" element="6" type="ModuType_Skill_Active" addsub="Add" usetype="1" attack="0" target="0">
+		<!--常量条件-->
+		<CommonTemplate id="1">
+			<Condition type="ValidObject" id="4">
+				<Check type="Player_Type">
+					<Object value="SelfPlayer_Type"/>
+				</Check>
+			</Condition>
+			<Condition type="Timer" id="10">
+				<Check flag="1"/>
+			</Condition>
+			<Condition type="Event" id="11">
+				<Check eventtype="ET_ExitGame" flag="2"/>
+			</Condition>
+			
+			<ConditionGroup id="1">
+				<ConditionID value="1"/>
+				<ConditionID value="2"/>
+			</ConditionGroup>
+			<ConditionGroup id="2">
+				<ConditionID value="4"/>
+			</ConditionGroup>
+			<ConditionGroup id="3">
+				<ConditionID value="11"/>
+			</ConditionGroup>
+			<ConditionGroup id="4">
+				<ConditionID value="9"/>
+			</ConditionGroup>
+			<!--作用对象自已-->
+			<OperatObjects type="point" id="2" position="ePos_Self"/>
+		</CommonTemplate>
+		<!--变量条件及条件组-->
+		<CommonTemplate id="2">
+			<Condition type="BaseProperty" id="9">
+				<Check object="self" name="Mp" cmpfun="GreaterEqual" valuename="CostMp"/>
+			</Condition>
+		</CommonTemplate>
+		<ComTemplate id="1"/>
+		<Template id="2">
+			<StaticParam cooldown="10000" consmpname="CostMp" acttime="0"/>
+			<ComTemplate id="2"/>
+			<!--阶段-->
+			<CProcedure name="Fire">
+				<!--准备-->
+				<Step name="Begin">
+					<!--条件检测-->
+					<Do operobjid="2">
+						<!--有效对象判断-->
+						<CondiGroup id="2" trueret="MR_Continue" falseret="MR_Modu_End">
+							<False>
+								<SendMsg type="SMT_ProcFail" range="MsgRange_Single" value="5"/>
+							</False>
+						</CondiGroup>
+						<CondiGroup id="4" trueret="MR_Continue" falseret="MR_Modu_End">
+							<False>
+								<SendMsg type="SMT_ProcFail" range="MsgRange_Single" value="2"/>
+							</False>
+						</CondiGroup>
+						<CondiGroup trueret="MR_Continue">
+							<True>
+								<DestObjsChange object="Obj_Dest" type="OP_Dest_Obj_Add"/>
+								<CooldownChange object="Obj_Self" type="OP_TS_Self" value="10000"/>
+								<BuffChange bufid="3001" buflvlname="lvl" operator="Add"/>
+								<ObjectPropertyChange object="Obj_Self" name="Mp" operator="Sub" valuename="CostMp"/>
+								<ObjectPropertyChange object="Obj_Self" operator="Update"/>
+								<RegisterTimer flag="1" future="100"/>
+								<SendMsg object="Obj_Self" type="SMT_ProcBegin" range="MsgRange_Around"/>
+							</True>
+						</CondiGroup>
+					</Do>
+				</Step>
+				<Step name="End">
+					<Do operobjid="2">
+						<CondiGroup trueret="MR_Modu_End">
+							<True>								
+								<UnRegisterTimer flag="1"/>							
+							</True>
+						</CondiGroup>
+					</Do>
+				</Step>
+			</CProcedure>
+		</Template>
+		<Level value="1" tempid="2">
+			<Variablelist name="CostMp" value="249"/>
+			<Variablelist name="lvl" value="1"/>
+		</Level>
+		<Level value="2" tempid="2">
+			<Variablelist name="CostMp" value="295"/>
+			<Variablelist name="lvl" value="2"/>
+		</Level>
+		<Level value="3" tempid="2">
+			<Variablelist name="CostMp" value="341"/>
+			<Variablelist name="lvl" value="3"/>
+		</Level>
+		<Level value="4" tempid="2">
+			<Variablelist name="CostMp" value="384"/>
+			<Variablelist name="lvl" value="4"/>
+		</Level>
+		<Level value="5" tempid="2">
+			<Variablelist name="CostMp" value="433"/>
+			<Variablelist name="lvl" value="5"/>
+		</Level>
+		<Level value="6" tempid="2">
+			<Variablelist name="CostMp" value="481"/>
+			<Variablelist name="lvl" value="6"/>
+		</Level>
+		<Level value="7" tempid="2">
+			<Variablelist name="CostMp" value="527"/>
+			<Variablelist name="lvl" value="7"/>
+		</Level>
+		<Level value="8" tempid="2">
+			<Variablelist name="CostMp" value="573"/>
+			<Variablelist name="lvl" value="8"/>
+		</Level>
+		<Level value="9" tempid="2">
+			<Variablelist name="CostMp" value="619"/>
+			<Variablelist name="lvl" value="9"/>
+		</Level>
+		<Level value="10" tempid="2">
+			<Variablelist name="CostMp" value="665"/>
+			<Variablelist name="lvl" value="10"/>
+		</Level>
+	</BaseModule>
+</Module>

@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="gb2312" standalone="no"?>
+<!--id为ID,
+    name为名称，
+    desc为描述，
+    element为元素类型，
+	type类型包括    ModuType_Buff,//buff
+					ModuType_DeBuff,//debuff(持续伤害技能)
+					ModuType_Skill_Active,//主动技能
+					ModuType_Skill_Passive,//被动技能
+					ModuType_Skill_OnOff,//开关(行动)技能,
+	addsub类型包括
+    LockTarget锁定目标，
+    LockSkill锁定技能-->
+<Module>
+	<BaseModule id="10407" name="冲锋" element="6" type="ModuType_Skill_Active" usetype="1" addsub="Sub" sriptparam="scripts/skills/init.script" attack="1" target="1">
+		<!--计算公式-->
+		<CommonTemplate id="1">
+			<!--计算公式-->
+				<Expression id="1" filename="scripts/skills/skill_to_monster.script">
+			</Expression>
+				<Expression id="2" filename="scripts/skills/skill_to_person.script">
+			</Expression>
+				<Expression id="3" filename="scripts/skills/deductenergy.script">
+			</Expression>
+			    <Expression id="4" filename="scripts/questskill/skillcooltext.script">
+			</Expression>	
+			<Condition type="ValidObject" id="3">
+				<Check type="Player_Type">
+					<!--玩家检查值value可选
+									SelfPlayer_Type		 表示本人
+									EnemyPlayer_Type 	 表示敌国玩家								
+									NormalPlayer_Type 	 表示本国普通玩家	
+									RedPlayer_Type	  	 表示本国红名玩家
+									PurplePlayer_Type	 表示本国紫名玩家
+									TeamPlayer_Type		 表示队友
+									TongPlayer_Tyep		 表示帮会成员-->
+					<Object value="EnemyPlayer_Type"/>
+					<Object value="NormalPlayer_Type"/>
+					<Object value="PurplePlayer_Type"/>
+					<Object value="RedPlayer_Type"/>
+				</Check>
+			</Condition>
+			<Condition type="ValidObject" id="9">
+				<!--怪物检查值value可选
+									Monster_Type	 表示普通怪物
+									Npc_Type		 表示NPC
+									SMonster_Type	 表示特殊怪物-->
+				<Check type="Monster_Type">
+					<Object value="Monster_Type"/>
+					<Object value="Npc_Type"/>
+					<Object value="Guard_Type"/>
+				</Check>
+			</Condition>
+			<Condition type="Timer" id="2">
+				<Check flag="1"/>
+			</Condition>
+			<Condition type="Distance" id="4">
+				<Check cmpfun="LessEqual" value="9"/>
+			</Condition>
+			<Condition type="Distance" id="5">
+				<Check cmpfun="GreaterEqual" value="2"/>
+			</Condition>
+			<Condition type="Block" id="8">
+				<Check type="Line" dir="DIREC_Front" blocktype="1" shapetype="0"/>
+			</Condition>
+			<!--死亡条件-->
+			<Condition type="BaseProperty" id="7">
+				<Check object="self" name="State" cmpfun="NotEqual" value="2"/>
+			</Condition>
+				<Condition type="BaseProperty" id="11">
+				<Check object="Obj_Self" name="bMoveable" cmpfun="Equal" value="1"/>
+			</Condition>
+			<Condition type="Script" id="10">
+				<Check value="scripts/skills/pksub.script"/>
+			</Condition>
+			<Condition type="Block" id="12">
+				<Check type="Point" dir="DIREC_Front" blocktype="1" shapetype="0"/>
+			</Condition>
+			<Condition type="Script" id="50">
+				<Check value="scripts/skills/skill_dot_formonster_jiyun.script"/>
+			</Condition>
+			<Condition type="Script" id="51">
+				<Check value="scripts/skills/skill_dot_forperson_jiyun.script"/>
+			</Condition>
+			<Condition type="Script" id="52">
+				<Check value="scripts/skills/resultjudge.script"/>
+			</Condition>
+			<Condition type="BaseProperty" id="99">
+				<Check object="self" name="Occu" cmpfun="Equal" value="4"/>
+			</Condition>
+			<Condition type="BaseProperty" id="97">
+				<Check object="self" name="Occu" cmpfun="Equal" value="10"/>
+			</Condition>
+			<Condition type="BaseProperty" id="96">
+				<Check object="self" name="Occu" cmpfun="Equal" value="11"/>
+			</Condition>
+			<Condition type="Buff" id="21">
+				<Check id="2231" object="Obj_Self"/>
+			</Condition>
+			<ConditionGroup id="21">
+				<ConditionID value="21"/>
+			</ConditionGroup>
+			<ConditionGroup id="99" mode="Mode_Or">
+				<ConditionID value="99"/>
+				<ConditionID value="97"/>
+				<ConditionID value="96"/>
+			</ConditionGroup>	
+			
+			<ConditionGroup id="1" mode="Mode_Or">
+				<ConditionID value="3"/>
+				<ConditionID value="9"/>
+			</ConditionGroup>
+			<ConditionGroup id="2">
+				<ConditionID value="4"/>
+				<ConditionID value="5"/>
+			</ConditionGroup>
+			<ConditionGroup id="3">
+				<ConditionID value="6"/>
+			</ConditionGroup>
+			<ConditionGroup id="4" mode="Mode_And">
+				<ConditionID value="8"/>
+				<ConditionID value="12"/>
+			</ConditionGroup>
+			<ConditionGroup id="5">
+				<ConditionID value="3"/>
+			</ConditionGroup>
+			<ConditionGroup id="6">
+				<ConditionID value="9"/>
+			</ConditionGroup>
+			<ConditionGroup id="7">
+				<ConditionID value="10"/>
+			</ConditionGroup>
+			<ConditionGroup id="8">
+				<ConditionID value="11"/>
+			</ConditionGroup>
+			<ConditionGroup id="50">
+				<ConditionID value="50"/>
+				<ConditionID value="52"/>
+			</ConditionGroup>
+			<ConditionGroup id="51">
+				<ConditionID value="51"/>
+				<ConditionID value="52"/>
+			</ConditionGroup>
+			<!--作用对象目标-->
+			<OperatObjects type="point" id="1" position="ePos_Dest"/>
+			<!--作用对象自已-->
+			<OperatObjects type="point" id="2" position="ePos_Self"/>
+		</CommonTemplate>
+		<CommonTemplate id="2">
+			<Condition type="BaseProperty" id="6">
+				<Check object="self" name="Mp" cmpfun="GreaterEqual" valuename="CostMp"/>
+			</Condition>
+		</CommonTemplate>
+		<ComTemplate id="1"/>
+		<Template id="1">
+			<StaticParam cooldown="15000" minatkdis="0" maxatkdis="8" consmpname="CostMp" scriptparamname="ScriptParam"/>
+			<!--作用对象目标-->
+			<ComTemplate id="2"/>
+			<!--阶段-->
+			<CProcedure name="Fire">
+				<!--准备-->
+				<Step name="Begin">
+					<!--条件检测-->
+					<Do operobjid="1">
+						<!--可否攻击判断-->
+						<CondiGroup id="21" trueret="MR_Modu_End" falseret="MR_Continue">
+							<True>
+								<Script>
+									<ExpressionID value="4"/>
+								</Script>
+								<SendMsg type="SMT_ProcFail" range="MsgRange_Single" value="0"/>
+							</True>
+						</CondiGroup>
+						<CondiGroup id="7" trueret="MR_Continue" falseret="MR_Modu_End">
+							<False>
+								<SendMsg type="SMT_ProcFail" range="MsgRange_Single" value="5"/>
+							</False>
+						</CondiGroup>
+						<CondiGroup id="1" trueret="MR_Continue" falseret="MR_Modu_End">
+							<False>
+								<SendMsg type="SMT_ProcFail" range="MsgRange_Single" value="5"/>
+							</False>
+						</CondiGroup>
+						<!--判断MP是否足够-->
+						<CondiGroup id="3" trueret="MR_Continue" falseret="MR_Modu_End">
+							<False>
+								<SendMsg type="SMT_ProcFail" range="MsgRange_Single" value="2"/>
+							</False>
+						</CondiGroup>
+						<!--距离判断-->
+						<CondiGroup id="2" trueret="MR_Continue" falseret="MR_Modu_End">
+							<False>
+								<SendMsg type="SMT_ProcFail" range="MsgRange_Single" value="6"/>
+							</False>
+						</CondiGroup>
+						<!--阻挡判断-->
+						<CondiGroup id="4" trueret="MR_Continue" falseret="MR_Modu_End">
+							<False>
+								<SendMsg type="SMT_ProcFail" range="MsgRange_Single" value="10"/>
+							</False>
+						</CondiGroup>
+						<!--状态判断-->
+						<CondiGroup id="8" trueret="MR_Continue" falseret="MR_Modu_End">
+							<False>
+								<SendMsg type="SMT_ProcFail" range="MsgRange_Single" value="0"/>
+							</False>
+						</CondiGroup>
+						<CondiGroup trueret="MR_Continue">
+							<True>
+								<DestObjsChange object="Obj_Dest" type="OP_Dest_Obj_Add"/>								
+							</True>
+						</CondiGroup>
+					</Do>
+					<Do operobjid="2">
+						<CondiGroup id="99" trueret="MR_Continue" falseret="MR_Modu_End">
+							<False>
+								<SendMsg type="SMT_ProcFail" range="MsgRange_Single" value="7"/>
+							</False>
+						</CondiGroup>
+
+						<CondiGroup trueret="MR_Continue">
+							<True>
+								<CooldownChange type="OP_TS_Self" value="15000"/>
+								<CooldownChange object="Obj_Self" type="OP_TS_Act" value="300"/>
+								<RegisterTimer object="Obj_Self" flag="1" future="300" intel="0" count="0"/>
+							</True>
+						</CondiGroup>
+					</Do>
+					<Do operobjid="1">
+						<CondiGroup id="5" trueret="MR_Continue" falseret="MR_Continue">
+							<True>
+								<CondiGroup id="51" trueret="MR_Continue" falseret="MR_Continue">
+									<True>
+										<BuffChange object="Obj_Dest" bufid="2102" buflvl="12" operator="Add"/>
+									</True>	
+								</CondiGroup>
+							</True>
+						</CondiGroup>
+						<CondiGroup id="6" trueret="MR_Continue" falseret="MR_Continue">
+							<True>
+								<CondiGroup id="50" trueret="MR_Continue" falseret="MR_Continue">
+									<True>
+										<BuffChange object="Obj_Dest" bufid="2192" buflvl="1" operator="Add"/>
+									</True>	
+								</CondiGroup>
+							</True>
+						</CondiGroup>
+						<CondiGroup trueret="MR_Continue">
+							<True>
+								<DirecChange object="Obj_Self" direction="Dir_Dest"/>
+								<PosChange object="Obj_Self" referobj="Obj_Dest" dir="DIRECT_Front" style="POS_SLIP" speed="0.015"/>
+								<SendMsg object="Obj_Self" type="SMT_ProcBegin" range="MsgRange_Around"/>
+							</True>
+						</CondiGroup>
+					</Do>
+				</Step>
+				<Step name="TimeOut">
+					<Do operobjid="1">
+						<CondiGroup id="5" trueret="MR_Continue" falseret="MR_Continue">
+							<True>
+								<Script>
+									<ExpressionID value="2"/>
+								</Script>
+							</True>
+						</CondiGroup>
+						<CondiGroup id="6" trueret="MR_Continue" falseret="MR_Continue">
+							<True>
+								<Script>
+									<ExpressionID value="1"/>
+								</Script>
+							</True>
+						</CondiGroup>
+						<CondiGroup id="7" trueret="MR_Continue" falseret="MR_Modu_End">
+							<True>
+								<PosChange object="Obj_Self" referobj="Obj_Dest" dir="DIRECT_Front" style="POS_SLIP" speed="0.015"/>
+								<DamageChange object="Obj_Dest" operator="Add" type="DAMAGE_TYPE_HP" valuesname="$DamageHp"/>
+								<DoDamage damageresvaluesname="$DamResult" blastvaluesname="$BlastResult"/>
+							</True>
+						</CondiGroup>
+					</Do>
+					<Do operobjid="2">
+						<CondiGroup trueret="MR_Modu_End">
+							<True>
+								<Script>
+									<ExpressionID value="3"/>
+								</Script>
+								<ObjectPropertyChange object="Obj_Self" name="Mp" operator="Sub" valuename="CostMp"/>
+								<ObjectPropertyChange object="Obj_Self" operator="Update"/>
+								<SendMsg type="SMT_ProcEnd" range="MsgRange_Around"/>
+								<UnRegisterTimer flag="1"/>
+							</True>
+						</CondiGroup>
+					</Do>
+				</Step>
+			</CProcedure>
+		</Template>
+		<Level value="1" tempid="1">
+			<Variablelist name="CostMp" value="50"/>
+			<Variablelist name="Bufflv" value="3"/>
+			<Variablelist name="ScriptParam" value="0,52,0,0,0,0,3000,0"/>
+		</Level>
+		<Level value="2" tempid="1">
+			<Variablelist name="CostMp" value="63"/>
+			<Variablelist name="Bufflv" value="3"/>
+			<Variablelist name="ScriptParam" value="0,60,0,0,0,0,3267,0"/>
+		</Level>
+		<Level value="3" tempid="1">
+			<Variablelist name="CostMp" value="76"/>
+			<Variablelist name="Bufflv" value="3"/>
+			<Variablelist name="ScriptParam" value="0,68,0,0,0,0,3533,0"/>
+		</Level>
+		<Level value="4" tempid="1">
+			<Variablelist name="CostMp" value="91"/>
+			<Variablelist name="Bufflv" value="3"/>
+			<Variablelist name="ScriptParam" value="0,76,0,0,0,0,3800,0"/>
+		</Level>
+		<Level value="5" tempid="1">
+			<Variablelist name="CostMp" value="107"/>
+			<Variablelist name="Bufflv" value="3"/>
+			<Variablelist name="ScriptParam" value="0,84,0,0,0,0,4067,0"/>
+		</Level>
+		<Level value="6" tempid="1">
+			<Variablelist name="CostMp" value="125"/>
+			<Variablelist name="Bufflv" value="3"/>
+			<Variablelist name="ScriptParam" value="0,92,0,0,0,0,4333,0"/>
+		</Level>
+		<Level value="7" tempid="1">
+			<Variablelist name="CostMp" value="143"/>
+			<Variablelist name="Bufflv" value="3"/>
+			<Variablelist name="ScriptParam" value="0,100,0,0,0,0,4600,0"/>
+		</Level>
+		<Level value="8" tempid="1">
+			<Variablelist name="CostMp" value="163"/>
+			<Variablelist name="Bufflv" value="3"/>
+			<Variablelist name="ScriptParam" value="0,108,0,0,0,0,4867,0"/>
+		</Level>
+		<Level value="9" tempid="1">
+			<Variablelist name="CostMp" value="184"/>
+			<Variablelist name="Bufflv" value="3"/>
+			<Variablelist name="ScriptParam" value="0,116,0,0,0,0,5133,0"/>
+		</Level>
+		<Level value="10" tempid="1">
+			<Variablelist name="CostMp" value="207"/>
+			<Variablelist name="Bufflv" value="3"/>
+			<Variablelist name="ScriptParam" value="0,124,0,0,0,0,5400,0"/>
+		</Level>
+	</BaseModule>
+</Module>

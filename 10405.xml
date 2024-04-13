@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="gb2312"?>
+<Module>
+	<BaseModule id="10405" name="击晕" element="6" type="ModuType_Skill_Active" usetype="1" addsub="Sub" sriptparam="scripts/skills/init.script" attack="1" target="1">
+		<!--常量条件-->
+		<CommonTemplate id="1">
+			<Expression id="1" filename="scripts/skills/skill_to_monster.script">
+		</Expression>
+			<Expression id="2" filename="scripts/skills/skill_to_person.script">
+		</Expression>
+			<!--判断最大距离-->
+			<Condition type="Distance" id="2">
+				<Check cmpfun="LessEqual" value="2"/>
+			</Condition>
+			<!--判断最小距离-->
+			<Condition type="Distance" id="1">
+				<Check cmpfun="GreaterEqual" value="1"/>
+			</Condition>
+			<!--判断目标是否可攻击-->
+			<Condition type="ValidObject" id="3">
+				<Check type="Player_Type">
+					<!--玩家检查值value可选
+								SelfPlayer_Type		 表示本人
+								EnemyPlayer_Type 	 表示敌国玩家								
+								NormalPlayer_Type 	 表示本国普通玩家	
+								RedPlayer_Type	  	 表示本国红名玩家
+								PurplePlayer_Type	 表示本国紫名玩家
+								TeamPlayer_Type		 表示队友
+								TongPlayer_Tyep		 表示帮会成员-->
+					<Object value="EnemyPlayer_Type"/>
+					<Object value="NormalPlayer_Type"/>
+					<Object value="RedPlayer_Type"/>
+					<Object value="PurplePlayer_Type"/>
+				</Check>
+			</Condition>
+			<Condition type="ValidObject" id="4">
+				<!--怪物检查值value可选
+								Monster_Type	 表示普通怪物
+								Npc_Type		 表示NPC
+								Guard_Type		表示门卫
+								SMonster_Type	 表示特殊怪物-->
+				<Check type="Monster_Type">
+					<Object value="Monster_Type"/>
+					<Object value="Guard_Type"/>
+					<Object value="Npc_Type"/>
+				</Check>
+			</Condition>
+			<Condition type="Timer" id="10">
+				<Check flag="1"/>
+			</Condition>
+			<Condition type="Event" id="6">
+				<Check eventtype="ET_ExitGame" flag="2"/>
+			</Condition>
+			<Condition type="Good" id="11">
+				<Check object="self" place="2" pos="15" goodtype="8" cmpfun="Equal" value="1">
+					<CheckValue type="7" value1="2"/>
+				</Check>
+			</Condition>
+			<Condition type="Script" id="5">
+				<Check value="scripts/skills/pksub.script"/>
+			</Condition>
+			
+			<ConditionGroup id="1">
+				<ConditionID value="1"/>
+				<ConditionID value="2"/>
+			</ConditionGroup>
+			<ConditionGroup id="2" mode="Mode_Or">
+				<ConditionID value="3"/>
+				<ConditionID value="4"/>
+			</ConditionGroup>
+			<ConditionGroup id="3">
+				<ConditionID value="11"/>
+			</ConditionGroup>
+			<ConditionGroup id="5">
+				<ConditionID value="3"/>
+			</ConditionGroup>
+			<ConditionGroup id="6">
+				<ConditionID value="4"/>
+			</ConditionGroup>
+			<ConditionGroup id="7">
+				<ConditionID value="5"/>
+			</ConditionGroup>
+			<ConditionGroup id="8">
+				<ConditionID value="9"/>
+			</ConditionGroup>
+			<!--作用对象目标-->
+			<OperatObjects type="point" id="1" position="ePos_Dest"/>
+			<!--作用对象自已-->
+			<OperatObjects type="point" id="2" position="ePos_Self"/>
+		</CommonTemplate>
+		<!--变量条件及条件组-->
+		<CommonTemplate id="2">
+			<Condition type="BaseProperty" id="9">
+				<Check object="self" name="Mp" cmpfun="GreaterEqual" valuename="CostMp"/>
+			</Condition>
+			</CommonTemplate>
+		<ComTemplate id="1"/>
+		<Template id="2">
+			<StaticParam cooldown="12000" minatkdis="1" maxatkdis="1" consmpname="CostMp" scriptparamname="ScriptParam"/>
+			<ComTemplate id="2"/>
+			<!--阶段-->
+			<CProcedure name="Fire">
+				<!--准备-->
+				<Step name="Begin">
+					<Do operobjid="1">
+						<!--装备类型判断-->
+						<CondiGroup id="3" trueret="MR_Continue" falseret="MR_Modu_End">
+							<False>
+								<SendMsg type="SMT_ProcFail" range="MsgRange_Single" value="9"/>
+							</False>
+						</CondiGroup>
+					</Do>
+					<!--条件检测-->
+					<Do operobjid="1">
+						<!--可否攻击判断-->
+						<CondiGroup id="2" trueret="MR_Continue" falseret="MR_Modu_End">
+							<False>
+								<SendMsg type="SMT_ProcFail" range="MsgRange_Single" value="7"/>
+							</False>
+						</CondiGroup>
+						<!--距离判断-->
+						<CondiGroup id="1" trueret="MR_Continue" falseret="MR_Modu_End">
+							<False>
+								<SendMsg type="SMT_ProcFail" range="MsgRange_Single" value="6"/>
+							</False>
+						</CondiGroup>
+						<CondiGroup id="8" trueret="MR_Continue" falseret="MR_Modu_End">
+							<False>
+								<SendMsg type="SMT_ProcFail" range="MsgRange_Single" value="2"/>
+							</False>
+						</CondiGroup>
+						<CondiGroup trueret="MR_Continue">
+							<True>
+								<DestObjsChange object="Obj_Dest" type="OP_Dest_Obj_Add"/>
+								<RegisterEvent flag="2" name="ET_ExitGame"/>
+								<CooldownChange object="Obj_Self" type="OP_TS_Self" value="12000"/>
+								<DirecChange object="Obj_Self" direction="Dir_Dest"/>
+								<RegisterTimer object="Obj_Self" flag="1" future="720" intel="0" count="0"/>
+								<CooldownChange object="Obj_Self" type="OP_TS_Act" value="900"/>
+								<SendMsg object="Obj_Self" type="SMT_ProcBegin" range="MsgRange_Around"/>
+							</True>
+						</CondiGroup>
+					</Do>
+				</Step>
+				<Step name="Event">
+					<Do operobjid="2">
+						<CondiGroup id="3" trueret="MR_Modu_End" falseret="MR_Continue">
+							<True>
+								<UnRegisterTimer flag="1"/>
+								<UnRegisterEvent flag="2"/>
+							</True>
+						</CondiGroup>
+					</Do>
+				</Step>
+				<Step name="TimeOut">
+					<!--条件检测-->
+					<Do operobjid="1">
+						<CondiGroup id="5" trueret="MR_Continue" falseret="MR_Continue">
+							<True>
+								<Script>
+									<ExpressionID value="2"/>
+								</Script>
+							</True>
+						</CondiGroup>
+						<CondiGroup id="6" trueret="MR_Continue" falseret="MR_Continue">
+							<True>
+								<Script>
+									<ExpressionID value="1"/>
+								</Script>
+							</True>
+						</CondiGroup>
+						<CondiGroup id="7" trueret="MR_Continue" falseret="MR_Modu_End">
+							<True>
+								<DamageChange object="Obj_Dest" operator="Add" type="DAMAGE_TYPE_HP" valuesname="$DamageHp"/>
+								<DoDamage damageresvaluesname="$DamResult" blastvaluesname="$BlastResult"/>
+								<BuffChange object="Obj_Dest" bufid="2102" buflvlname="Bufflv" operator="Add"/>
+							</True>
+						</CondiGroup>
+					</Do>
+					<Do operobjid="2">
+						<CondiGroup trueret="MR_Modu_End">
+							<True>
+								<ObjectPropertyChange object="Obj_Self" name="Mp" operator="Sub" valuename="CostMp"/>
+								<ObjectPropertyChange object="Obj_Self" operator="Update"/>
+								<UnRegisterTimer flag="1"/>
+							</True>
+						</CondiGroup>
+					</Do>
+				</Step>
+			</CProcedure>
+		</Template>
+		<Level value="1" tempid="2">
+			<Variablelist name="CostMp" value="148"/>
+			<Variablelist name="ScriptParam" value="0,52,0,0,0,0,1491,20"/>
+			<Variablelist name="Bufflv" value="1"/>
+		</Level>
+		<Level value="2" tempid="2">
+			<Variablelist name="CostMp" value="168"/>
+			<Variablelist name="ScriptParam" value="0,60,0,0,0,0,1501,23"/>
+			<Variablelist name="Bufflv" value="2"/>
+		</Level>
+		<Level value="3" tempid="2">
+			<Variablelist name="CostMp" value="188"/>
+			<Variablelist name="ScriptParam" value="0,66,0,0,0,0,1509,26"/>
+			<Variablelist name="Bufflv" value="3"/>
+		</Level>
+		<Level value="4" tempid="2">
+			<Variablelist name="CostMp" value="206"/>
+			<Variablelist name="ScriptParam" value="0,72,0,0,0,0,1518,29"/>
+			<Variablelist name="Bufflv" value="4"/>
+		</Level>
+		<Level value="5" tempid="2">
+			<Variablelist name="CostMp" value="226"/>
+			<Variablelist name="ScriptParam" value="0,80,0,0,0,0,1531,32"/>
+			<Variablelist name="Bufflv" value="5"/>
+		</Level>
+		<Level value="6" tempid="2">
+			<Variablelist name="CostMp" value="246"/>
+			<Variablelist name="ScriptParam" value="0,86,0,0,0,0,1540,35"/>
+			<Variablelist name="Bufflv" value="6"/>
+		</Level>
+		<Level value="7" tempid="2">
+			<Variablelist name="CostMp" value="264"/>
+			<Variablelist name="ScriptParam" value="0,92,0,0,0,0,1549,38"/>
+			<Variablelist name="Bufflv" value="7"/>
+		</Level>
+		<Level value="8" tempid="2">
+			<Variablelist name="CostMp" value="284"/>
+			<Variablelist name="ScriptParam" value="0,100,0,0,0,0,1563,42"/>
+			<Variablelist name="Bufflv" value="8"/>
+		</Level>
+		<Level value="9" tempid="2">
+			<Variablelist name="CostMp" value="304"/>
+			<Variablelist name="ScriptParam" value="0,106,0,0,0,0,1574,45"/>
+			<Variablelist name="Bufflv" value="9"/>
+		</Level>
+		<Level value="10" tempid="2">
+			<Variablelist name="CostMp" value="322"/>
+			<Variablelist name="ScriptParam" value="0,112,0,0,0,0,1585,48"/>
+			<Variablelist name="Bufflv" value="10"/>
+		</Level>
+	</BaseModule>
+</Module>

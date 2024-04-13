@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="gb2312" standalone="no"?>
+<!--id技能ID,name为技能名称，desc为技能类型，element技能元素类型，type技能类型,SkillUseType技能类别，LockTarget锁定目标，LockSkill锁定技能-->
+<Module>
+	<BaseModule id="10401" name="盾专精" element="6" type="ModuType_Skill_Passive" locktarget="0" lockskill="0" attack="0" target="0">	
+	<CommonTemplate id="1">
+		<!--检测玩家身上是否装备有盾类道具-->
+		<Condition type="Event" id="1">
+			<Check eventtype="ET_EquipMount" flag="1" var1="2" var2="16" var3="9"/>
+		</Condition>
+		<Condition type="Event" id="2">
+			<Check eventtype="ET_EquipUnmount" flag="2" var1="2" var2="16" var3="9"/>
+		</Condition>
+		<Condition type="Good" id="3">
+			<Check  place="2" pos="16" goodtype="9" cmpfun="Equal" value="1"/>
+		</Condition>
+		<ConditionGroup id="1">
+			<ConditionID value="1"/>
+		</ConditionGroup>	
+		<ConditionGroup id="2">
+			<ConditionID value="2"/>
+		</ConditionGroup>	
+		<ConditionGroup id="3">
+			<ConditionID value="3"/>
+		</ConditionGroup>	
+		<!--作用对象自已-->
+		<OperatObjects type="point" id="1" position="ePos_Self"/>				
+	</CommonTemplate>		
+	
+	<ComTemplate id="1">
+	</ComTemplate>	
+	
+		<Template id="1">				
+			<StaticParam CoolDown="0" MinAtkDis="0" MaxAtkDis="10"/>
+			<!--阶段-->
+			<CProcedure name="Fire">
+				<!--准备-->
+				<Step name="Begin">
+					<!--条件检测-->
+					<Do operobjid="1">
+						<CondiGroup trueret="MR_Continue">
+							<True>
+								<DestObjsChange object="Obj_Self" type="OP_Dest_Obj_Add"/>	
+								<RegisterEvent flag ="1" name="ET_EquipMount"/>
+								<RegisterEvent flag ="2" name="ET_EquipUnmount"/>
+							</True>
+						</CondiGroup>						
+						<CondiGroup id="3" trueret="MR_Continue" falseret="MR_Continue">
+							<True>								
+								<ObjectPropertyChange object="Obj_Self" name="E_Block" operator="Add" valuename="Block"/>
+								<ObjectPropertyChange object="Obj_Self" operator="Update"/> 
+							</True>
+						</CondiGroup>
+					</Do>					
+				</Step>
+				<Step name="Event">
+				<Do operobjid= "1">
+					<CondiGroup id="1" trueret="MR_Return" falseret="MR_Continue">
+						<True>							
+							<ObjectPropertyChange object="Obj_Self" name="E_Block" operator="Add" valuename="Block"/>
+							<ObjectPropertyChange object="Obj_Self" operator="Update"/>								
+						</True>	
+					</CondiGroup>			
+					<CondiGroup id="2" trueret="MR_Return" falseret="MR_Continue">						  
+						<True>	
+							<ObjectPropertyChange object="Obj_Self" name="E_Block" operator="Sub" valuename="Block"/>	
+							<ObjectPropertyChange operator="Update"/>	
+						</True>	
+					</CondiGroup>
+				</Do>				
+			</Step>
+				<!--结束节点-->
+				<Step name="End">					
+					<Do operobjid="1">
+						<CondiGroup id="3" trueret="MR_Continue" falseret="MR_Modu_End">		
+						</CondiGroup>
+						<CondiGroup trueret="MR_Modu_End">
+							<True>			
+								<DestObjsChange object="Obj_Self" type="OP_Dest_Obj_Clear"/>
+								<ObjectPropertyChange object="Obj_Self" name="E_Block" operator="Sub" valuename="Block"/>
+								<ObjectPropertyChange operator="Update"/>	
+								<UnRegisterEvent flag="1"/>
+								<UnRegisterEvent flag="2"/>	
+							</True>
+						</CondiGroup>
+					</Do>
+				</Step>
+			</CProcedure>
+		</Template>
+	<Level value="1" tempid="1">
+		<Variablelist name="Block" value="5"></Variablelist>
+	</Level>
+	<Level value="2" tempid="1">
+		<Variablelist name="Block" value="6"></Variablelist>
+	</Level>
+	<Level value="3" tempid="1">
+		<Variablelist name="Block" value="7"></Variablelist>
+	</Level>
+	<Level value="4" tempid="1">
+		<Variablelist name="Block" value="8"></Variablelist>
+	</Level>
+	<Level value="5" tempid="1">
+		<Variablelist name="Block" value="9"></Variablelist>
+	</Level>
+	<Level value="6" tempid="1">
+		<Variablelist name="Block" value="10"></Variablelist>
+	</Level>
+	<Level value="7" tempid="1">
+		<Variablelist name="Block" value="29"></Variablelist>
+	</Level>
+	<Level value="8" tempid="1">
+		<Variablelist name="Block" value="31"></Variablelist>
+	</Level>
+	<Level value="9" tempid="1">
+		<Variablelist name="Block" value="38"></Variablelist>
+	</Level>
+	<Level value="10" tempid="1">
+		<Variablelist name="Block" value="47"></Variablelist>
+	</Level>
+	<Level value="11" tempid="1">
+		<Variablelist name="Block" value="58"></Variablelist>
+	</Level>
+	<Level value="12" tempid="1">
+		<Variablelist name="Block" value="71"></Variablelist>
+	</Level>
+	<Level value="13" tempid="1">
+		<Variablelist name="Block" value="87"></Variablelist>
+	</Level>
+	<Level value="14" tempid="1">
+		<Variablelist name="Block" value="107"></Variablelist>
+	</Level>
+	<Level value="15" tempid="1">
+		<Variablelist name="Block" value="19"></Variablelist>
+	</Level>
+	<Level value="16" tempid="1">
+		<Variablelist name="Block" value="20"></Variablelist>
+	</Level>
+	<Level value="17" tempid="1">
+		<Variablelist name="Block" value="21"></Variablelist>
+	</Level>
+	<Level value="18" tempid="1">
+		<Variablelist name="Block" value="22"></Variablelist>
+	</Level>
+	<Level value="19" tempid="1">
+		<Variablelist name="Block" value="23"></Variablelist>
+	</Level>
+	<Level value="20" tempid="1">
+		<Variablelist name="Block" value="24"></Variablelist>
+	</Level>
+	
+	</BaseModule>
+</Module>
+

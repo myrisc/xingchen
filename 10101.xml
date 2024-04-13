@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="gb2312" standalone="no"?>
+<Module>
+	<BaseModule id="10101" name="强健体魄" element="6" type="ModuType_Skill_Passive" usetype="1" sriptparam="scripts/skills/init.script" attack="0" target="0">
+		<CommonTemplate id="1">
+			<!--作用对象自已-->
+			<OperatObjects type="point" id="1" position="ePos_Self"/>
+		</CommonTemplate>
+		<ComTemplate id="1">
+		</ComTemplate>
+		<Template id="1">
+			<StaticParam cooldown="" minatkdis="" maxatkdis="" consmp=""/>
+			<!--阶段-->
+			<CProcedure name="Fire">
+				<!--准备-->
+				<Step name="Begin">
+					<!--条件检测-->
+					<Do operobjid="1">
+						<CondiGroup trueret="MR_Continue">
+							<True>
+								<Script>
+									<ExpressionID value="1"/>
+								</Script>
+								<ObjectPropertyChange object="Obj_Self" name="E_MaxHp" operator="Add" valuename="MaxHp"/>
+								<ObjectPropertyChange object="Obj_Self" name="Hp" operator="Add" valuename="MaxHp"/>
+								<ObjectPropertyChange object="Obj_Self" operator="Update"/>
+							</True>
+						</CondiGroup>
+					</Do>
+				</Step>
+				<Step name="End">
+					<Do operobjid="1">
+						<CondiGroup trueret="MR_Continue">
+							<True>
+								<Script>
+									<ExpressionID value="1"/>
+								</Script>
+								<ObjectPropertyChange object="Obj_Self" name="Hp" operator="Sub" valuename="MaxHp"/>
+								<ObjectPropertyChange object="Obj_Self" name="E_MaxHp" operator="Sub" valuename="MaxHp"/>
+								<ObjectPropertyChange object="Obj_Self" operator="Update"/>
+							</True>
+						</CondiGroup>
+					</Do>
+				</Step>
+			</CProcedure>
+		</Template>
+		<Level value="1" tempid="1">
+			<Variablelist name="MaxHp" value="7"/>			
+		</Level>
+		<Level value="2" tempid="1">
+			<Variablelist name="MaxHp" value="20"/>
+		</Level>
+		<Level value="3" tempid="1">
+			<Variablelist name="MaxHp" value="40"/>
+		</Level>
+		<Level value="4" tempid="1">
+			<Variablelist name="MaxHp" value="66"/>
+		</Level>
+		<Level value="5" tempid="1">
+			<Variablelist name="MaxHp" value="99"/>
+		</Level>
+		<Level value="6" tempid="1">
+			<Variablelist name="MaxHp" value="152"/>
+		</Level>
+		<Level value="7" tempid="1">
+			<Variablelist name="MaxHp" value="203"/>
+		</Level>
+		<Level value="8" tempid="1">
+			<Variablelist name="MaxHp" value="261"/>
+		</Level>
+		<Level value="9" tempid="1">
+			<Variablelist name="MaxHp" value="327"/>
+		</Level>
+		<Level value="10" tempid="1">
+			<Variablelist name="MaxHp" value="399"/>
+		</Level>
+		<Level value="11" tempid="1">
+			<Variablelist name="MaxHp" value="479"/>
+		</Level>
+		<Level value="12" tempid="1">
+			<Variablelist name="MaxHp" value="566"/>
+		</Level>
+		<Level value="13" tempid="1">
+			<Variablelist name="MaxHp" value="727"/>
+		</Level>
+		<Level value="14" tempid="1">
+			<Variablelist name="MaxHp" value="839"/>
+		</Level>
+		<Level value="15" tempid="1">
+			<Variablelist name="MaxHp" value="958"/>
+		</Level>
+		<Level value="16" tempid="1">
+			<Variablelist name="MaxHp" value="1086"/>
+		</Level>
+		<Level value="17" tempid="1">
+			<Variablelist name="MaxHp" value="1222"/>
+		</Level>
+		<Level value="18" tempid="1">
+			<Variablelist name="MaxHp" value="1366"/>
+		</Level>
+		<Level value="19" tempid="1">
+			<Variablelist name="MaxHp" value="1517"/>
+		</Level>
+		<Level value="20" tempid="1">
+			<Variablelist name="MaxHp" value="1677"/>
+		</Level>
+	</BaseModule>
+</Module>

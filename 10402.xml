@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="gb2312" standalone="no"?>
+ <Module>
+ <BaseModule id="10402" name="坚韧皮肤" desc="增加自身的物理防御能力。" element="7" type="ModuType_Skill_Passive" usetype="Physical_Skill"  locktarget="0" lockskill="0" attack="0" target="0">	
+		<CommonTemplate id="1">	
+				<!--作用对象自已-->
+				<OperatObjects type="point" id="1" position="ePos_Self"/>				
+		</CommonTemplate>
+		
+		<ComTemplate id="1">
+		</ComTemplate>
+		
+	<Template id="1">	
+		<StaticParam cooldown="" minatkdis="" maxatkdis="" consmp=""/>
+				<!--阶段-->
+				<CProcedure name="Fire">
+					<!--准备-->
+					<Step name="Begin">
+						<!--条件检测-->
+							<Do operobjid="1">
+								<CondiGroup trueret="MR_Continue">
+									<True>
+									<ObjectPropertyChange object="Obj_Self" name="E_Def" operator="Add" valuename="Def"/>
+									<ObjectPropertyChange object="Obj_Self" operator="Update"/> 
+									</True>
+								</CondiGroup>
+							</Do>
+					</Step>
+					
+					<Step name="End">
+						<Do operobjid="1">
+							<CondiGroup trueret="MR_Continue">
+								<True>
+								<ObjectPropertyChange object="Obj_Self" name="E_Def" operator="Sub" valuename="Def"/>
+								<ObjectPropertyChange object="Obj_Self" operator="Update"/> 	
+								</True>
+							</CondiGroup>
+						</Do>					
+					</Step>
+				</CProcedure>
+	</Template>	
+	<Level value="1" tempid="1">
+		<Variablelist name="Def" value="22"></Variablelist>
+	</Level>
+	<Level value="2" tempid="1">
+		<Variablelist name="Def" value="24"></Variablelist>
+	</Level>
+	<Level value="3" tempid="1">
+		<Variablelist name="Def" value="25"></Variablelist>
+	</Level>
+	<Level value="4" tempid="1">
+		<Variablelist name="Def" value="27"></Variablelist>
+	</Level>
+	<Level value="5" tempid="1">
+		<Variablelist name="Def" value="28"></Variablelist>
+	</Level>
+	<Level value="6" tempid="1">
+		<Variablelist name="Def" value="30"></Variablelist>
+	</Level>
+	<Level value="7" tempid="1">
+		<Variablelist name="Def" value="31"></Variablelist>
+	</Level>
+	<Level value="8" tempid="1">
+		<Variablelist name="Def" value="33"></Variablelist>
+	</Level>
+	<Level value="9" tempid="1">
+		<Variablelist name="Def" value="35"></Variablelist>
+	</Level>
+	<Level value="10" tempid="1">
+		<Variablelist name="Def" value="36"></Variablelist>
+	</Level>
+	<Level value="11" tempid="1">
+		<Variablelist name="Def" value="38"></Variablelist>
+	</Level>
+	<Level value="12" tempid="1">
+		<Variablelist name="Def" value="39"></Variablelist>
+	</Level>
+	<Level value="13" tempid="1">
+		<Variablelist name="Def" value="41"></Variablelist>
+	</Level>
+	<Level value="14" tempid="1">
+		<Variablelist name="Def" value="43"></Variablelist>
+	</Level>
+	<Level value="15" tempid="1">
+		<Variablelist name="Def" value="44"></Variablelist>
+	</Level>
+	<Level value="16" tempid="1">
+		<Variablelist name="Def" value="46"></Variablelist>
+	</Level>
+	<Level value="17" tempid="1">
+		<Variablelist name="Def" value="47"></Variablelist>
+	</Level>
+	<Level value="18" tempid="1">
+		<Variablelist name="Def" value="49"></Variablelist>
+	</Level>
+	<Level value="19" tempid="1">
+		<Variablelist name="Def" value="50"></Variablelist>
+	</Level>
+	<Level value="20" tempid="1">
+		<Variablelist name="Def" value="51"></Variablelist>
+	</Level>
+</BaseModule>
+</Module>

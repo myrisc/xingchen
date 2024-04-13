@@ -1,0 +1,538 @@
+<?xml version="1.0" encoding="gb2312" standalone="no"?>
+<StudySkillList>
+	<StudyTeacher name="10001Fighter" occ="战士">
+		<Occ id="0"/>
+		<Occ id="1"/>
+		<Occ id="4"/>
+		<Occ id="5"/>
+		<Occ id="10"/>
+		<Occ id="11"/>
+		<Occ id="12"/>
+		<Occ id="13"/>
+		<Skill id="10101"/>
+		<Skill id="10102"/>
+		<Skill id="10103"/>
+		<Skill id="10104"/>
+		<Skill id="10105"/>
+		<Skill id="10106"/>
+		<Skill id="10107"/>
+		<Skill id="10108"/>
+	</StudyTeacher>
+	<StudyTeacher name="10003Fighter" occ="战士">
+		<Occ id="0"/>
+		<Occ id="1"/>
+		<Occ id="4"/>
+		<Occ id="5"/>
+		<Occ id="10"/>
+		<Occ id="11"/>
+		<Occ id="12"/>
+		<Occ id="13"/>
+		<Skill id="10101"/>
+		<Skill id="10102"/>
+		<Skill id="10103"/>
+		<Skill id="10104"/>
+		<Skill id="10105"/>
+		<Skill id="10106"/>
+		<Skill id="10107"/>
+		<Skill id="10108"/>
+	</StudyTeacher>
+	<StudyTeacher name="10003Kinght" occ="骑士导师贝丽丝">
+		<Occ id="4"/>
+		<Occ id="10"/>
+		<Occ id="11"/>
+		<Skill id="10101"/>
+		<Skill id="10102"/>
+		<Skill id="10103"/>
+		<Skill id="10104"/>
+		<Skill id="10105"/>
+		<Skill id="10106"/>
+		<Skill id="10107"/>
+		<Skill id="10108"/>
+		<Skill id="10401"/>
+		<Skill id="10403"/>
+		<Skill id="10404"/>
+		<Skill id="10406"/>
+		<Skill id="10407"/>
+		<Skill id="10408"/>
+		<Skill id="10409"/>
+		<Skill id="10410"/>
+		<Skill id="10411"/>
+		<Skill id="10412"/>
+	</StudyTeacher>
+	<StudyTeacher name="10003Paladin" occ="圣骑士导师
+巴西莱">
+		<Occ id="10"/>
+		<Skill id="10101"/>
+		<Skill id="10102"/>
+		<Skill id="10103"/>
+		<Skill id="10105"/>
+		<Skill id="10106"/>
+		<Skill id="10108"/>
+		<Skill id="10401"/>
+		<Skill id="10403"/>
+		<Skill id="10404"/>
+		<Skill id="10406"/>
+		<Skill id="10407"/>
+		<Skill id="10408"/>
+		<Skill id="10409"/>
+		<Skill id="10410"/>
+		<Skill id="10411"/>
+		<Skill id="10412"/>
+	</StudyTeacher>
+	<StudyTeacher name="10003DarkKnight" occ="暗骑士导师
+西泽">
+		<Occ id="11"/>
+		<Skill id="10101"/>
+		<Skill id="10102"/>
+		<Skill id="10103"/>
+		<Skill id="10105"/>
+		<Skill id="10106"/>
+		<Skill id="10108"/>
+		<Skill id="10401"/>
+		<Skill id="10403"/>
+		<Skill id="10404"/>
+		<Skill id="10406"/>
+		<Skill id="10407"/>
+		<Skill id="10408"/>
+		<Skill id="10409"/>
+		<Skill id="10410"/>
+		<Skill id="10411"/>
+		<Skill id="10412"/>
+	</StudyTeacher>
+	<StudyTeacher name="10003Warrior" occ="斗士导师阿诺德">
+		<Occ id="5"/>
+		<Occ id="12"/>
+		<Occ id="13"/>
+		<Skill id="10101"/>
+		<Skill id="10102"/>
+		<Skill id="10103"/>
+		<Skill id="10104"/>
+		<Skill id="10105"/>
+		<Skill id="10106"/>
+		<Skill id="10107"/>
+		<Skill id="10108"/>
+		<Skill id="10501"/>
+		<Skill id="10502"/>
+		<Skill id="10503"/>
+		<Skill id="10504"/>
+		<Skill id="10505"/>
+		<Skill id="10506"/>
+		<Skill id="10507"/>
+		<Skill id="10508"/>
+		<Skill id="10509"/>
+		<Skill id="10511"/>
+		<Skill id="10512"/>
+	</StudyTeacher>
+	<StudyTeacher name="10003Berserker" occ="狂战士导师
+巴尔杜因">
+		<Occ id="13"/>
+		<Skill id="10101"/>
+		<Skill id="10102"/>
+		<Skill id="10103"/>
+		<Skill id="10106"/>
+		<Skill id="10107"/>
+		<Skill id="10108"/>
+		<Skill id="10501"/>
+		<Skill id="10502"/>
+		<Skill id="10503"/>
+		<Skill id="10504"/>
+		<Skill id="10505"/>
+		<Skill id="10506"/>
+		<Skill id="10507"/>
+		<Skill id="10508"/>
+		<Skill id="10509"/>
+		<Skill id="10511"/>
+		<Skill id="10512"/>
+	</StudyTeacher>
+	<StudyTeacher name="10003SwordScholar" occ="剑士导师
+巴尔达">
+		<Occ id="12"/>
+		<Skill id="10101"/>
+		<Skill id="10102"/>
+		<Skill id="10103"/>
+		<Skill id="10106"/>
+		<Skill id="10107"/>
+		<Skill id="10108"/>
+		<Skill id="10501"/>
+		<Skill id="10502"/>
+		<Skill id="10503"/>
+		<Skill id="10504"/>
+		<Skill id="10505"/>
+		<Skill id="10506"/>
+		<Skill id="10507"/>
+		<Skill id="10508"/>
+		<Skill id="10509"/>
+		<Skill id="10511"/>
+		<Skill id="10512"/>
+	</StudyTeacher>
+	<StudyTeacher name="10001Mystic" occ="法师">
+		<Occ id="2"/>
+		<Occ id="8"/>
+		<Occ id="9"/>
+		<Occ id="18"/>
+		<Occ id="19"/>
+		<Occ id="20"/>
+		<Occ id="21"/>
+		<Skill id="10201"/>
+		<Skill id="10202"/>
+		<Skill id="10203"/>
+		<Skill id="10204"/>
+		<Skill id="10206"/>
+		<Skill id="10208"/>
+		<Skill id="10209"/>
+		<Skill id="10210"/>
+		<Skill id="10212"/>
+	</StudyTeacher>
+	<StudyTeacher name="10003Mystic" occ="法师">
+		<Occ id="2"/>
+		<Occ id="8"/>
+		<Occ id="9"/>
+		<Occ id="18"/>
+		<Occ id="19"/>
+		<Occ id="20"/>
+		<Occ id="21"/>
+		<Skill id="10201"/>
+		<Skill id="10202"/>
+		<Skill id="10203"/>
+		<Skill id="10204"/>
+		<Skill id="10206"/>
+		<Skill id="10208"/>
+		<Skill id="10209"/>
+		<Skill id="10210"/>
+		<Skill id="10212"/>
+	</StudyTeacher>
+	<StudyTeacher name="10003Mage" occ="术士导师莫瑞">
+		<Occ id="8"/>
+		<Occ id="18"/>
+		<Occ id="19"/>
+		<Skill id="10201"/>
+		<Skill id="10202"/>
+		<Skill id="10203"/>
+		<Skill id="10204"/>
+		<Skill id="10206"/>
+		<Skill id="10208"/>
+		<Skill id="10209"/>
+		<Skill id="10210"/>
+		<Skill id="10212"/>
+		<Skill id="10801"/>
+		<Skill id="10302"/>
+		<Skill id="10803"/>
+		<Skill id="10211"/>
+		<Skill id="10804"/>
+		<Skill id="10805"/>
+		<Skill id="10806"/>
+		<Skill id="10807"/>
+		<Skill id="10808"/>
+		<!--Skill id="10809"/>
+		<Skill id="10810"/-->
+	</StudyTeacher>
+	<StudyTeacher name="10003Wizard" occ="巫师导师
+塞西莉亚">
+		<Occ id="18"/>
+		<Skill id="10201"/>
+		<Skill id="10202"/>
+		<Skill id="10203"/>
+		<Skill id="10204"/>
+		<Skill id="10206"/>
+		<Skill id="10208"/>
+		<Skill id="10209"/>
+		<Skill id="10210"/>
+		<Skill id="10212"/>
+		<Skill id="10801"/>
+		<Skill id="10302"/>
+		<Skill id="10803"/>
+		<Skill id="10211"/>
+		<Skill id="10804"/>
+		<Skill id="10805"/>
+		<Skill id="10806"/>
+		<Skill id="10807"/>
+		<Skill id="10808"/>
+		<!--Skill id="10809"/>
+		<Skill id="10810"/-->
+	</StudyTeacher>
+	<StudyTeacher name="10003Necromancer" occ="死灵法师导师
+贝尼亚米诺">
+		<Occ id="19"/>
+		<Skill id="10201"/>
+		<Skill id="10202"/>
+		<Skill id="10203"/>
+		<Skill id="10206"/>
+		<Skill id="10208"/>
+		<Skill id="10209"/>
+		<Skill id="10801"/>
+		<Skill id="10302"/>
+		<Skill id="10803"/>
+		<Skill id="10804"/>
+		<!--Skill id="10809"/>
+		<Skill id="10810"/-->
+	</StudyTeacher>
+	<StudyTeacher name="10003Cleric" occ="牧师导师
+阿洛德">
+		<Occ id="9"/>
+		<Occ id="20"/>
+		<Occ id="21"/>
+		<Skill id="10201"/>
+		<Skill id="10202"/>
+		<Skill id="10203"/>
+		<Skill id="10204"/>
+		<Skill id="10206"/>
+		<Skill id="10207"/>
+		<Skill id="10208"/>
+		<Skill id="10209"/>
+		<Skill id="10210"/>
+		<Skill id="10212"/>
+		<Skill id="10901"/>
+		<Skill id="10103"/>
+		<Skill id="10903"/>
+		<Skill id="10904"/>
+		<Skill id="10905"/>
+		<Skill id="10906"/>
+		<Skill id="10907"/>
+		<Skill id="10908"/>
+		<Skill id="10909"/>
+		<Skill id="10910"/>
+		<Skill id="10911"/>
+		<Skill id="10912"/>
+		<Skill id="10913"/>
+		<Skill id="10914"/>
+		<Skill id="10915"/>
+	</StudyTeacher>
+	<StudyTeacher name="10003Bishop" occ="主教导师
+丁尼生">
+		<Occ id="20"/>
+		<Skill id="10201"/>
+		<Skill id="10202"/>
+		<Skill id="10203"/>
+		<Skill id="10204"/>
+		<Skill id="10206"/>
+		<Skill id="10207"/>
+		<Skill id="10208"/>
+		<Skill id="10209"/>
+		<Skill id="10212"/>
+		<Skill id="10901"/>
+		<Skill id="10103"/>
+		<Skill id="10903"/>
+		<Skill id="10904"/>
+		<Skill id="10905"/>
+		<Skill id="10906"/>
+		<Skill id="10907"/>
+		<Skill id="10908"/>
+		<Skill id="10909"/>
+		<Skill id="10910"/>
+		<Skill id="10911"/>
+		<Skill id="10912"/>
+		<Skill id="10913"/>
+		<Skill id="10914"/>
+		<Skill id="10915"/>
+		<Skill id="10916"/>
+	</StudyTeacher>
+	<StudyTeacher name="10003Sage" occ="贤者导师
+阿特丽斯">
+		<Occ id="21"/>
+		<Skill id="10201"/>
+		<Skill id="10202"/>
+		<Skill id="10203"/>
+		<Skill id="10204"/>
+		<Skill id="10206"/>
+		<Skill id="10207"/>
+		<Skill id="10208"/>
+		<Skill id="10209"/>
+		<Skill id="10212"/>
+		<Skill id="10901"/>
+		<Skill id="10103"/>
+		<Skill id="10903"/>
+		<Skill id="10904"/>
+		<Skill id="10905"/>
+		<Skill id="10906"/>
+		<Skill id="10907"/>
+		<Skill id="10908"/>
+		<Skill id="10909"/>
+		<Skill id="10910"/>
+		<Skill id="10911"/>
+		<Skill id="10912"/>
+		<Skill id="10913"/>
+		<Skill id="10914"/>
+		<Skill id="10915"/>
+		<Skill id="10916"/>
+		<Skill id="12121"/>
+	</StudyTeacher>
+	<StudyTeacher name="10001Rogue" occ="行者">
+		<Occ id="3"/>
+		<Occ id="6"/>
+		<Occ id="7"/>
+		<Occ id="14"/>
+		<Occ id="15"/>
+		<Occ id="16"/>
+		<Occ id="17"/>
+		<Skill id="10301"/>
+		<Skill id="10302"/>
+		<Skill id="10303"/>
+		<Skill id="10304"/>
+		<Skill id="10305"/>
+		<Skill id="10306"/>
+		<Skill id="10307"/>
+	</StudyTeacher>
+	<StudyTeacher name="10003Rogue" occ="行者">
+		<Occ id="3"/>
+		<Occ id="6"/>
+		<Occ id="7"/>
+		<Occ id="14"/>
+		<Occ id="15"/>
+		<Occ id="16"/>
+		<Occ id="17"/>
+		<Skill id="10301"/>
+		<Skill id="10302"/>
+		<Skill id="10303"/>
+		<Skill id="10304"/>
+		<Skill id="10305"/>
+		<Skill id="10306"/>
+		<Skill id="10307"/>
+	</StudyTeacher>
+	<StudyTeacher name="10003Scout" occ="斥候导师本杰明">
+		<Occ id="6"/>
+		<Occ id="14"/>
+		<Occ id="15"/>
+		<Skill id="10301"/>
+		<Skill id="10302"/>
+		<Skill id="10303"/>
+		<Skill id="10304"/>
+		<Skill id="10305"/>
+		<Skill id="10306"/>
+		<Skill id="10307"/>
+		<Skill id="10601"/>
+		<Skill id="10602"/>
+		<Skill id="10603"/>
+		<Skill id="10308"/>
+		<Skill id="10604"/>
+		<Skill id="10605"/>
+		<Skill id="10606"/>
+		<Skill id="10607"/>
+		<Skill id="10608"/>
+		<Skill id="10609"/>
+		<Skill id="10610"/>
+		<!--Skill id="10611"/-->
+		<!--Skill id="10612"/-->
+		<Skill id="10613"/>
+		<Skill id="10614"/>
+		<Skill id="10615"/>
+		<Skill id="10616"/>
+		<Skill id="10618"/>
+		<Skill id="10619"/>
+	</StudyTeacher>
+	<StudyTeacher name="10003Assassin" occ="刺客导师
+布兰妮">
+		<Occ id="15"/>
+		<Skill id="10301"/>
+		<Skill id="10302"/>
+		<Skill id="10305"/>
+		<Skill id="10306"/>
+		<Skill id="10601"/>
+		<Skill id="10602"/>
+		<Skill id="10603"/>
+		<Skill id="10308"/>
+		<Skill id="10604"/>
+		<Skill id="10607"/>
+		<Skill id="10608"/>
+		<Skill id="10609"/>
+		<Skill id="10610"/>
+		<!--Skill id="10611"/-->
+		<!--Skill id="10612"/-->
+		<Skill id="10614"/>
+		<Skill id="10616"/>
+		<Skill id="10618"/>
+		<Skill id="10619"/>
+	</StudyTeacher>
+	<StudyTeacher name="10003Patrol" occ="巡守导师
+奥雷斯特">
+		<Occ id="14"/>
+		<Skill id="10301"/>
+		<Skill id="10302"/>
+		<Skill id="10305"/>
+		<Skill id="10306"/>
+		<Skill id="10601"/>
+		<Skill id="10602"/>
+		<Skill id="10603"/>
+		<Skill id="10605"/>
+		<Skill id="10606"/>
+		<Skill id="10607"/>
+		<Skill id="10608"/>
+		<Skill id="10609"/>
+		<Skill id="10610"/>
+		<!--Skill id="10611"/-->
+		<!--Skill id="10612"/-->
+		<Skill id="10613"/>
+		<Skill id="10615"/>
+		<Skill id="10616"/>
+		<Skill id="10618"/>
+		<Skill id="10619"/>
+	</StudyTeacher>
+	<StudyTeacher name="10003Actor" occ="艺人导师安罗斯">
+		<Occ id="7"/>
+		<Occ id="16"/>
+		<Occ id="17"/>
+		<Skill id="10301"/>
+		<Skill id="10302"/>
+		<Skill id="10303"/>
+		<Skill id="10304"/>
+		<Skill id="10305"/>
+		<Skill id="10306"/>
+		<Skill id="10307"/>
+		<Skill id="10701"/>
+		<Skill id="10102"/>
+		<Skill id="10703"/>
+		<Skill id="10704"/>
+		<Skill id="10705"/>
+		<Skill id="10706"/>
+		<Skill id="10707"/>
+		<!--Skill id="10708"/-->
+		<Skill id="10709"/>
+		<Skill id="10710"/>
+		<!--Skill id="10712"/-->
+		<Skill id="10713"/>
+		<Skill id="10714"/>
+		<Skill id="10715"/>
+	</StudyTeacher>
+	<StudyTeacher name="10003Bard" occ="吟游诗人导师
+伯尔吉亚">
+		<Occ id="17"/>
+		<Skill id="10301"/>
+		<Skill id="10302"/>
+		<Skill id="10304"/>
+		<Skill id="10305"/>
+		<Skill id="10306"/>
+		<Skill id="10701"/>
+		<Skill id="10102"/>
+		<Skill id="10703"/>
+		<Skill id="10704"/>
+		<Skill id="10705"/>
+		<Skill id="10706"/>
+		<Skill id="10707"/>
+		<!--Skill id="10708"/-->
+		<Skill id="10709"/>
+		<Skill id="10710"/>
+		<!--Skill id="10712"/-->
+		<Skill id="10713"/>
+		<Skill id="10714"/>
+		<Skill id="10715"/>
+	</StudyTeacher>
+	<StudyTeacher name="10003SwordDancer" occ="剑舞者导师
+蒂凡妮">
+		<Occ id="16"/>
+		<Skill id="10301"/>
+		<Skill id="10302"/>
+		<Skill id="10305"/>
+		<Skill id="10306"/>
+		<Skill id="10701"/>
+		<Skill id="10102"/>
+		<Skill id="10703"/>
+		<Skill id="10704"/>
+		<Skill id="10705"/>
+		<Skill id="10706"/>
+		<Skill id="10707"/>
+		<Skill id="10709"/>
+		<Skill id="10710"/>
+		<Skill id="10713"/>
+		<Skill id="10714"/>
+		<Skill id="10715"/>
+	</StudyTeacher>
+</StudySkillList>
